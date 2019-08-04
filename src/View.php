@@ -8,15 +8,16 @@ class View {
 	public $base_url;
 
 	function __construct($user_properties) {
-		$this->user_properties = $user_properties;
-		$this->template = $this->constructTemplate();
-
 		$base_url_parts = explode('/', $_SERVER['SCRIPT_NAME']);
 		array_pop($base_url_parts);
 		$base_url = implode('/', $base_url_parts);
 		if ($base_url === '')
 			$base_url = '/';
 		$this->base_url = $base_url;
+
+
+		$this->user_properties = $user_properties;
+		$this->template = $this->constructTemplate();
 	}
 
 	public function constructTemplate() {
