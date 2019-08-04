@@ -9,9 +9,16 @@ class Homepage extends View {
 				<head>
 					<meta name="viewport" content="width=device-width, initial-scale=1">
 					<meta charset="UTF-8">
-					<link rel="stylesheet" type="text/css" href="css/imtrss.css">
-					<link rel="stylesheet" type="text/css" href="css/mobile-imtrss.css">
+
+					<meta property="og:title" content="IMT RSS Aggregator" />
+					<meta property="og:type" content="website" />
+					<meta property="og:image" content="{$this->base_url}/img/imt-logo.jpg" />
+					<meta property="og:description" content="This aggregator displays the latest articles from Fightback, La Riposte, Esquerda Marxista, and Socialist appeal." /> 
+
+					<link rel="stylesheet" type="text/css" href="{$this->base_url}/css/imtrss.css">
+					<link rel="stylesheet" type="text/css" href="{$this->base_url}/css/mobile-imtrss.css">
 					<title>IMT RSS Aggregator</title>
+					<link rel="icon" type="image/png" href="{$this->base_url}/img/favicon.png" />
 				</head>
 				<body class="home__body">
 					<h1 class="home__title">Welcome to the IMT RSS aggregator!</h1>
