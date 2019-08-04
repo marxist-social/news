@@ -1,0 +1,15 @@
+[
+	{
+		"name": "Fightback",
+		"url": "https://admin.marxist.ca/feed/atom",
+		"type": "wordpress",
+		"country": "Canada",
+		"province": null
+	}, {
+		"name": "La Riposte Socialiste",
+		"url": "https://admin.marxiste.qc.ca/feed/atom",
+		"type": "wordpress",
+		"country": "Canada",
+		"province": "Québec"
+	}
+]
