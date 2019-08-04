@@ -8,12 +8,21 @@ class Homepage extends View {
 			<html>
 				<head>
 					<meta name="viewport" content="width=device-width, initial-scale=1">
+					<link rel="stylesheet" type="text/css" href="/css/imtrss.css">
+					<link rel="stylesheet" type="text/css" href="/css/mobile-imtrss.css">
+					<title>IMT RSS Aggregator</title>
 				</head>
-				<body>
-					<h1>Welcome to the IMT RSS aggregator!</h1>
-					<div class="aggregators">
+				<body class="home__body">
+					<h1 class="home__title">Welcome to the IMT RSS aggregator!</h1>
+					<p class="home__meta">The page contains a list of IMT sections, with the six latest posts from their websites following.</p>
+					<p class="home__meta">To report bugs, please contact June.</p>
+					<hr />
+					<div class="home__aggregators">
 						%aggregators%
 					</div>
+					<hr />
+					<p class="home__end">End of IMT RSS Aggregator</p>
+					<p class="home__footer_meta">Visit our international website at <a href="https://marxist.com/" target="_blank">https://marxist.com/</a></p>
 				</body>
 			</html>
 		TEMPLATE;
@@ -26,10 +35,37 @@ class Homepage extends View {
 		// Perform SIMPLE replacements
 		$aggregators_html = '';
 		foreach ($this->user_properties['aggregators'] as $aggregator) {
+			$aggregator_post_html = "";
+			foreach ($aggregator->posts as $post) {
+
+				$date = date('l jS \of F Y h:i:s A', strtotime($post->post_date)); // dirty date format
+
+				$aggregator_post_html .= <<<TEMPLATE
+					<div class="post">
+						<h3 class="post__title">{$post->title}</h3>
+						<p class="post__meta">Posted by {$post->author} on {$date} under category {$post->category}</p>
+						<div class="post__blurb">
+							{$post->blurb}
+						</div>
+						<p class="post__link"><a href="{$post->link}" target="_blank">Read more</a></p>
+					</div>
+				TEMPLATE;
+			}
+
+
+			$province = null; // Dirty comma replacement for the locations
+			if (!is_null($aggregator->site_info->province))
+				$province = ', '.$aggregator->site_info->province;
+
 			$aggregators_html .= <<<TEMPLATE
+				<hr />
 				<div class="aggregator">
-					<h2 class="aggregator__title">{$aggregator->getName()}</h2>
-					<p class="aggregator__meta">{$aggregator->getCountry()} <small>{$aggregator->getProvince()}</small></p>
+					<h2 class="aggregator__title">{$aggregator->site_info->name} 
+						<small>{$aggregator->site_info->country}{$province}</small>
+					</h2>
+					<div class="aggregator__latest_posts">
+						{$aggregator_post_html}
+					</div>
 				</div>
 			TEMPLATE;
 		}

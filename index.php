@@ -32,7 +32,7 @@ foreach ($all_rss_sites as $rss_site) {
 
 // Foreach, get the latest data from the source
 foreach ($aggregators as $aggregator) {
-	$aggregator->fetchLatestPosts(5);
+	$aggregator->fetchLatestPosts(6);
 }
 
 // Create the home page view

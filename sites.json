@@ -11,5 +11,17 @@
 		"type": "wordpress",
 		"country": "Canada",
 		"province": "Québec"
+	}, {
+		"name": "Esquerda Marxista",
+		"url": "https://www.marxismo.org.br/feed/atom",
+		"type": "wordpress",
+		"country": "Brasil",
+		"province": null
+	}, {
+		"name": "Socialist Appeal",
+		"url": "https://www.socialist.net/feed/atom",
+		"type": "wordpress",
+		"country": "England",
+		"province": null
 	}
 ]
