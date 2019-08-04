@@ -5,10 +5,14 @@ class View {
 
 	public $user_properties;
 	public $template = null;
+	public $base_url;
 
 	function __construct($user_properties) {
 		$this->user_properties = $user_properties;
 		$this->template = $this->constructTemplate();
+
+		var_dump($_SERVER);
+		die();
 	}
 
 	public function constructTemplate() {
