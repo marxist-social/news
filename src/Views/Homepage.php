@@ -9,8 +9,8 @@ class Homepage extends View {
 				<head>
 					<meta name="viewport" content="width=device-width, initial-scale=1">
 					<meta charset="UTF-8">
-					<link rel="stylesheet" type="text/css" href="/css/imtrss.css">
-					<link rel="stylesheet" type="text/css" href="/css/mobile-imtrss.css">
+					<link rel="stylesheet" type="text/css" href="css/imtrss.css">
+					<link rel="stylesheet" type="text/css" href="css/mobile-imtrss.css">
 					<title>IMT RSS Aggregator</title>
 				</head>
 				<body class="home__body">
