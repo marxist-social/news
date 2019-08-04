@@ -11,7 +11,8 @@ class View {
 		$this->user_properties = $user_properties;
 		$this->template = $this->constructTemplate();
 
-		var_dump($SERVER['SCRIPT_NAME']);
+		var_dump($_SERVER);
+		var_dump($_SERVER['SCRIPT_NAME']);
 		$base_url_parts = explode('/', $_SERVER['SCRIPT_NAME']);
 		var_dump($base_url_parts);
 		array_pop($base_url_parts);
