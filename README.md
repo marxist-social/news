@@ -11,7 +11,12 @@ Lots of room for improvement!
 
 ## Todo
 
-* Some kind of caching, it takes a while to run with four sites.
+* Some kind of caching, it takes a while to run with four sites
 * Prettier CSS
 * Actually write the Joomla aggregator
-* Maybe a table of contacts at top of homepage, with anchors to sections
+* Maybe a table of contents at top of homepage, with anchors to sections
+* Socialist appeal is only returning five articles, see if there's a way to get more
+
+## Low-priority todo's
+
+* Move the code that decides which RSS aggregator to construct out of `index.php`

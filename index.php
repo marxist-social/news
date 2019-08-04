@@ -1,6 +1,7 @@
 <?php
 use ImtRssAggregator\RssAggregators\WordPressRssAggregator;
 use ImtRssAggregator\RssAggregators\JoomlaRssAggregator;
+use ImtRssAggregator\RssAggregators\FightbackRssAggregator;
 use ImtRssAggregator\Views\Homepage;
 
 
@@ -15,6 +16,9 @@ $aggregators = [];
 foreach ($all_rss_sites as $rss_site) {
 
 	switch ($rss_site->type) {
+		case 'fightback':
+			$aggregator = new FightbackRssAggregator($rss_site);
+			break;
 		case 'wordpress':
 			$aggregator = new WordPressRssAggregator($rss_site);
 			break;

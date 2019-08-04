@@ -8,21 +8,22 @@ class Homepage extends View {
 			<html>
 				<head>
 					<meta name="viewport" content="width=device-width, initial-scale=1">
+					<meta charset="UTF-8">
 					<link rel="stylesheet" type="text/css" href="/css/imtrss.css">
 					<link rel="stylesheet" type="text/css" href="/css/mobile-imtrss.css">
 					<title>IMT RSS Aggregator</title>
 				</head>
 				<body class="home__body">
 					<h1 class="home__title">Welcome to the IMT RSS aggregator!</h1>
-					<p class="home__meta">The page contains a list of IMT sections, with the six latest posts from their websites following.</p>
-					<p class="home__meta">To report bugs, please contact June.</p>
+					<p class="home__meta">This page contains a list of IMT sections along with the six latest posts from their website.</p>
+					<p class="home__meta">This project is a work in progress. To contribute or report bugs, please visit <a href="https://github.com/junipermcintyre/imt-rss-aggregator" target="_blank">https://github.com/junipermcintyre/imt-rss-aggregator</a>.</p>
 					<hr />
 					<div class="home__aggregators">
 						%aggregators%
 					</div>
 					<hr />
 					<p class="home__end">End of IMT RSS Aggregator</p>
-					<p class="home__footer_meta">Visit our international website at <a href="https://marxist.com/" target="_blank">https://marxist.com/</a></p>
+					<p class="home__footer_meta">Visit our international website at <a href="https://marxist.com/" target="_blank">https://marxist.com/</a>.</p>
 				</body>
 			</html>
 		TEMPLATE;
