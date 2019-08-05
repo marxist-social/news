@@ -2,12 +2,10 @@
 /vendor
 
 # Database
-db/*
+db/*.json
 !db/example.*.json
+db/article_cache/*.json
+!db/article_cache/example.*.json
 
 # scrap notes
 scrap_notes.md
-
-# Article cache
-article_cache/*
-!article_cache/example_slug.json

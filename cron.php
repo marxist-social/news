@@ -1,34 +1,54 @@
 <?php
 
-/*
-db = new JsonDatabaseProcesser(__DIR__/'db')
-db->loadTablesIntoMemory(['sites', 'app_settings']);
+// Autoload our classes
+require __DIR__ . '/vendor/autoload.php';
 
-foreach (db->tables['sites'] as site)
-	figure out which bitch is the oldest-checked (save its key)
+// Load the sites and application settings into memory from config/"db"
+$db = new \ImtRssAggregator\DatabaseProcessor\JsonDatabaseProcessor();
+$db->loadTablesIntoMemory(['sites', 'app_settings']);
 
-articles = Get its latest cache_limit posts
-site_cache_writer = new SiteCacheWriter(site, '__DIR__/article_cache')
-site_cache_writer->writeCache(articles);
+// Figure out which site has gone longest without an update
+$oldest_site = null;
+foreach ($db->tables['sites'] as $site_index => $site) {
+	if (is_null($oldest_site) || 
+		is_null($site->last_cached) ||
+		$site->last_cached < $oldest_site->last_cached) {
+		
+		$oldest_site = $site;
+		$oldest_site_index = $site_index;
+	}
+}
 
-new_site = old_site->lsat_checked = now
-db->tables['sites'][bitch_index] = old_site/new)site
-db->saveWholeTable()
-boom
-*/
+// Aggregate the latest "cache_limit" posts
+$aggregator = null;
+switch ($oldest_site->aggregator_type) {
+	case 'fightback':
+		$aggregator = new \ImtRssAggregator\DatabaseProcessor\FightbackRssAggregator($oldest_site);
+		break;
+	case 'wordpress':
+		$aggregator = new \ImtRssAggregator\DatabaseProcessor\WordPressRssAggregator($oldest_site);
+		break;
+	case 'joomla':
+		$aggregator = new \ImtRssAggregator\DatabaseProcessor\JoomlaRssAggregator($oldest_site);
+		break;
+	default:
+		$aggregator = null;
+		break;
+}
+if (is_null($aggregator))
+	throw new Exception("The site '".$oldest_site->name."' has an unrecognized aggregator type: '".$oldest_site->aggregator_type)
+$aggregator->fetchLatestPosts($db->tables['app_settings']->cache_limit);
 
+// Save them to the cache
+$oldest_site_table_name = 'article_cache/'.$oldest_site->slug;
+$db->tables[$oldest_site_table_name] = $aggregator->getCacheablePosts();
+$db->saveWholeTable($oldest_site_table_name);
 
+// Update the sites last-used or wtv
+$db->tables['sites'][$oldest_site_index]->last_cached = strtotime(date());
+$db->saveWholeTable('sites');
 
+// TODO ! the mailing lists!!
 
-// Check the sites
-
-
-
-
-// See which hasn't been updated recently
-
-
-
-
-
-
+// Some nice output for the runner :)
+echo "Aggregated ".count($db->tables[$oldest_site_table_name])." articles for ".$oldest_site->name." at ".date("d M Y H:i:s");
