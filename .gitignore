@@ -1,3 +1,13 @@
 # composer
 /vendor
-sites.json
+
+# Database
+db/*
+!db/example.*.json
+
+# scrap notes
+scrap_notes.md
+
+# Article cache
+article_cache/*
+!article_cache/example_slug.json

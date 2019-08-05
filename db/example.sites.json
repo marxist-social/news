@@ -1,24 +1,28 @@
 [
 	{
 		"name": "Fightback",
+		"slug": "fb-ca",
 		"url": "https://admin.marxist.ca/feed/atom",
 		"type": "fightback",
 		"country": "Canada",
 		"province": null
 	}, {
 		"name": "La Riposte Socialiste",
+		"slug": "lrs-ca-qc",
 		"url": "https://admin.marxiste.qc.ca/feed/atom",
 		"type": "fightback",
 		"country": "Canada",
 		"province": "Québec"
 	}, {
 		"name": "Esquerda Marxista",
+		"slug": "em-br",
 		"url": "https://www.marxismo.org.br/feed/atom",
 		"type": "wordpress",
 		"country": "Brasil",
 		"province": null
 	}, {
 		"name": "Socialist Appeal",
+		"slug": "sa-gb",
 		"url": "https://www.socialist.net/feed/atom",
 		"type": "wordpress",
 		"country": "England",
