@@ -1,13 +1,13 @@
 <?php
-
 namespace ImtRssAggregator;
+use Exception;
 
 class DatabaseProcessor {
 	public $tables = null;
 	public $path = null;
 
 	function __construct($path) {
-		$this->path = path;
+		$this->path = $path;
 	}
 
 	public function loadTablesIntoMemory($table_names) {

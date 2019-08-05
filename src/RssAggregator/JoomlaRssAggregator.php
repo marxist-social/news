@@ -1,5 +1,5 @@
 <?php
-namespace ImtRssAggregator\RssAggregators;
+namespace ImtRssAggregator\RssAggregator;
 use ImtRssAggregator\RssAggregator;
 use Exception;
 

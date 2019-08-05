@@ -1,5 +1,5 @@
 <?php
-namespace ImtRssAggregator\Views;
+namespace ImtRssAggregator\View;
 use ImtRssAggregator\View;
 
 class Homepage extends View {
