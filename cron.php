@@ -3,6 +3,10 @@
 // Autoload our classes
 require __DIR__ . '/vendor/autoload.php';
 
+
+// Run the services
+
+
 // Load the sites and application settings into memory from config/"db"
 $db = new \ImtRssAggregator\DatabaseProcessor\JsonDatabaseProcessor(__DIR__.'/db');
 $db->loadTablesIntoMemory(['sites', 'app_settings', 'app_status']);
