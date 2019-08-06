@@ -24,7 +24,7 @@ class Homepage extends View {
 					<h1 class="home__title">Welcome to the IMT RSS aggregator!</h1>
 					<p class="home__meta">This page contains a list of IMT sections along with the six latest posts from their website.</p>
 					<p class="home__meta">This project is a work in progress. To contribute or report bugs, please visit <a href="https://github.com/junipermcintyre/imt-rss-aggregator" target="_blank">https://github.com/junipermcintyre/imt-rss-aggregator</a>.</p>
-					<hr />
+					<hr  style="margin-top: 3rem;"/>
 					<div class="home__aggregators">
 						%aggregators%
 					</div>
@@ -58,12 +58,14 @@ class Homepage extends View {
 			$province = null; // Get HTML for the whole site (insert individual posts in it)
 			if (!is_null($site->province))
 				$province = ', '.$site->province;
+			$last_cached_date = date('Y-m-d h:i:s', $site->last_cached);
 			$aggregators_html .= <<<TEMPLATE
 				<hr />
 				<div class="aggregator">
 					<h2 class="aggregator__title">{$site->name} 
 						<small>{$site->country}{$province}</small>
 					</h2>
+					<p class="aggregator__meta">Articles last cached {$last_cached_date}</p>
 					<div class="aggregator__latest_posts">
 						{$aggregator_post_html}
 					</div>

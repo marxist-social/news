@@ -40,6 +40,11 @@ if (is_null($aggregator))
 	throw new Exception("The site '".$oldest_site->name."' has an unrecognized aggregator type: '".$oldest_site->aggregator_type);
 $aggregator->fetchLatestPosts($db->tables['app_settings']->cache_limit);
 
+
+// TODO!! SKIP IF NO NEW ARTICLES!! DONT RE-INDEX THEN SAVE CAUSE THAT STUPID.
+/* Add a key to each cached article
+Dont re-save an article if the key(hash??) is the same. Or copy over the cached index??*/
+
 // Save them to the cache
 $oldest_site_table_name = 'article_cache/'.$oldest_site->slug;
 $db->tables[$oldest_site_table_name] = $aggregator->posts;
@@ -52,11 +57,20 @@ $db->tables['app_status']->articles_processed = $aggregator->top_post_index;
 $db->saveWholeTable('app_status');
 
 
-// See if anyone needs there mail..
+// See if anyone needs their mail..
 $db->loadTableIntoMemory('mailing_list');
+$count_people_notified = 0;
+foreach($db->tables['mailing_list'] as $mailing_recipient_array) {
+	$notifier = new \ImtRssAggregator\Notifier($db, $mailing_recipient_array, $oldest_site);
 
-
-
+	if ($notifier->shouldFire()) {
+		$notifier->fire();
+		$count_people_notified++;
+	}
+}
 
 // Some nice output for the runner :)
-echo "Aggregated ".count($db->tables[$oldest_site_table_name])." articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached)."\n";
+echo "Aggregated ".count($db->tables[$oldest_site_table_name])." articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".";
+if ($count_people_notified > 0)
+	echo $count_people_notified." users received notifications.";
+echo "\n";
