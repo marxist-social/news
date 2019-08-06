@@ -9,6 +9,7 @@ class Post {
 	public $category;
 	public $blurb;
 	public $link;
+	public $index;
 
 	function __construct($config) {
 		foreach($config as $config_key => $config_val) {

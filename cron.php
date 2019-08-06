@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 // Load the sites and application settings into memory from config/"db"
 $db = new \ImtRssAggregator\DatabaseProcessor\JsonDatabaseProcessor(__DIR__.'/db');
-$db->loadTablesIntoMemory(['sites', 'app_settings']);
+$db->loadTablesIntoMemory(['sites', 'app_settings', 'app_status']);
 
 // Figure out which site has gone longest without an update
 $oldest_site = null;
@@ -24,13 +24,13 @@ foreach ($db->tables['sites'] as $site_index => $site) {
 $aggregator = null;
 switch ($oldest_site->aggregator_type) {
 	case 'fightback':
-		$aggregator = new \ImtRssAggregator\RssAggregator\FightbackRssAggregator($oldest_site);
+		$aggregator = new \ImtRssAggregator\RssAggregator\FightbackRssAggregator($oldest_site, $db->tables['app_status']->articles_processed);
 		break;
 	case 'wordpress':
-		$aggregator = new \ImtRssAggregator\RssAggregator\WordPressRssAggregator($oldest_site);
+		$aggregator = new \ImtRssAggregator\RssAggregator\WordPressRssAggregator($oldest_site, $db->tables['app_status']->articles_processed);
 		break;
 	case 'joomla':
-		$aggregator = new \ImtRssAggregator\RssAggregator\JoomlaRssAggregator($oldest_site);
+		$aggregator = new \ImtRssAggregator\RssAggregator\JoomlaRssAggregator($oldest_site, $db->tables['app_status']->articles_processed);
 		break;
 	default:
 		$aggregator = null;
@@ -48,8 +48,15 @@ $db->saveWholeTable($oldest_site_table_name);
 // Update the sites last-used or wtv
 $db->tables['sites'][$oldest_site_index]->last_cached = strtotime("now");
 $db->saveWholeTable('sites');
+$db->tables['app_status']->articles_processed = $aggregator->top_post_index;
+$db->saveWholeTable('app_status');
 
-// TODO ! the mailing lists!!
+
+// See if anyone needs there mail..
+$db->loadTableIntoMemory('mailing_list');
+
+
+
 
 // Some nice output for the runner :)
 echo "Aggregated ".count($db->tables[$oldest_site_table_name])." articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached)."\n";
