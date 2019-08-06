@@ -3,11 +3,12 @@ namespace ImtRssAggregator;
 
 class View {
 
+	public $db;
 	public $user_properties;
 	public $template = null;
 	public $base_url;
 
-	function __construct($user_properties) {
+	function __construct($db = null, $user_properties = null) {
 		$base_url_parts = explode('/', $_SERVER['SCRIPT_NAME']);
 		array_pop($base_url_parts);
 		$base_url = implode('/', $base_url_parts);
@@ -17,6 +18,7 @@ class View {
 
 
 		$this->user_properties = $user_properties;
+		$this->db = $db;
 		$this->template = $this->constructTemplate();
 	}
 

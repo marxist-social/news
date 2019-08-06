@@ -40,36 +40,29 @@ class Homepage extends View {
 	 * Take this view and render it to an HTML string
 	 */
 	public function render() {
-		// Perform SIMPLE replacements
+		// Load the sites and application settings into memory from config/"db"
+		$this->db->loadTableIntoMemory('sites');
+
+
 		$aggregators_html = '';
-		foreach ($this->user_properties['aggregators'] as $aggregator) {
-			$aggregator_post_html = "";
-			foreach ($aggregator->posts as $post) {
-
-				$date = date('l jS \of F Y h:i:s A', strtotime($post->post_date)); // dirty date format
-
-				$aggregator_post_html .= <<<TEMPLATE
-					<div class="post">
-						<h3 class="post__title">{$post->title}</h3>
-						<p class="post__meta">Posted by {$post->author} on {$date} under category {$post->category}</p>
-						<div class="post__blurb">
-							{$post->blurb}
-						</div>
-						<p class="post__link"><a href="{$post->link}" target="_blank">Read more</a></p>
-					</div>
-				TEMPLATE;
+		foreach ($this->db->tables['sites'] as $site) {
+			$aggregator_post_html = ""; // Get individual post html
+			$site_posts_table_name = 'article_cache/'.$site->slug;
+			$this->db->loadTableIntoMemory($site_posts_table_name);
+			foreach ($this->db->tables[$site_posts_table_name] as $post_array) {
+				$post = new \ImtRssAggregator\Post($post_array);
+				$aggregator_post_html .= $post->getHtml();
 			}
+			$this->db->removeTableFromMemory($site_posts_table_name);
 
-
-			$province = null; // Dirty comma replacement for the locations
-			if (!is_null($aggregator->site_info->province))
-				$province = ', '.$aggregator->site_info->province;
-
+			$province = null; // Get HTML for the whole site (insert individual posts in it)
+			if (!is_null($site->province))
+				$province = ', '.$site->province;
 			$aggregators_html .= <<<TEMPLATE
 				<hr />
 				<div class="aggregator">
-					<h2 class="aggregator__title">{$aggregator->site_info->name} 
-						<small>{$aggregator->site_info->country}{$province}</small>
+					<h2 class="aggregator__title">{$site->name} 
+						<small>{$site->country}{$province}</small>
 					</h2>
 					<div class="aggregator__latest_posts">
 						{$aggregator_post_html}
