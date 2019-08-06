@@ -1,5 +1,8 @@
 <?php
 
+// Set timezone...
+date_default_timezone_set("America/Toronto");
+
 // Autoload our classes
 require __DIR__ . '/vendor/autoload.php';
 
