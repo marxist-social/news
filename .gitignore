@@ -7,5 +7,8 @@ db/*.json
 db/article_cache/*.json
 !db/article_cache/example.*.json
 
+# logs
+logs/*
+
 # scrap notes
 scrap_notes.md
