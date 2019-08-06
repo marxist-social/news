@@ -52,4 +52,4 @@ $db->saveWholeTable('sites');
 // TODO ! the mailing lists!!
 
 // Some nice output for the runner :)
-echo "Aggregated ".count($db->tables[$oldest_site_table_name])." articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached);
+echo "Aggregated ".count($db->tables[$oldest_site_table_name])." articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached)."\n";
