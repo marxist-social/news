@@ -1,4 +1,4 @@
-# IMT RSS Aggregator
+# News Aggregator for IMT
 
 ## Requirements
 
@@ -28,4 +28,4 @@ Code in `/src` is licensed under the GPL.
 * Make the jsondatabaseprocessor read {'keys' => [...], 'data' => [...]} (default null basically. Is a bit tough...)
 * Customizations for home page
 * Write out the mailing list / notifications code
-* Separate `/src` into its own composer-optimized package (and repo?)
+* Separate `/src` into its own composer-optimized package (and repo?) (called Marxist.social News Aggregator). Then just have this repo reference it.
