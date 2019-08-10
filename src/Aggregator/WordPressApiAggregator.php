@@ -12,10 +12,10 @@ class WordPressApiAggregator extends Aggregator {
 
 		$api_url = (substr($this->site_info->url, -1) === '/') ? $this->site_info->url : $this->site_info->url.'/';
 
-		if (!is_null($this->site_info->flags) && in_array('uses-no-api-prefix', $this->site_info->flags)) // For the US section...
-			$api_url .= 'posts?_embed=1&page=1';
-		else
-			$api_url .= 'wp-json/wp/v2/posts?_embed=1&page=1';
+		if (is_null($this->site_info->flags) || !in_array('uses-no-api-prefix', $this->site_info->flags)) // For the US section...
+			$api_url .= 'wp-json/wp/v2/';
+		
+		$api_url .= 'posts?_embed=1&page=1&status=publish';
 
 		$raw_data = file_get_contents($api_url, false, $context);
 		return $raw_data;
