@@ -30,6 +30,7 @@ class RssAggregator {
 		]]);
 		$raw_rss_data = file_get_contents($this->site_info->url, false, $context);
 		
+		$raw_rss_data = $this->applyRawDataHacks($this->site_info->raw_data_hacks, $raw_rss_data); // TODOOO MORE HACKs! turn the fightback class into hacks. Add Lal Salaam hacks.
 		$posts = $this->parseRssIntoPosts($raw_rss_data);
 		$posts = $this->limitPosts($posts, $n);
 		$posts = $this->indexPosts($posts);
@@ -60,5 +61,29 @@ class RssAggregator {
 		}
 
 		return $posts;
+	}
+
+	// Subclass keys aren't anything real.. it's just for this function, and in sites.json
+	// Whats the proper way to upgrade to a subclass when you dont know the subclass ahead of time??
+	// Im making a method in the parent class, and it gets a string... thoughts?
+	// Or maybe a trait... write now it's a function in the aggregator service 
+	public function upgradeToSubClass($sub_class_key) {
+		$sub_classes_names = [
+			'wordpress'
+		];
+
+		// TODO (low prioerity)
+	}
+
+	// Hacks are applied to the data sequentially
+	public function applyRawDataHacks($hack_function_names, $raw_data) {
+		if (!is_null($hack_function_names)) {
+			foreach ($hack_function_names as $hack_name) {
+				$full_hack_name = $hack_name.'_raw_data_hack';
+				$raw_data = $this->$full_hack_name($raw_data); // LOL this line
+			}
+		}
+
+		return $raw_data;
 	}
 }

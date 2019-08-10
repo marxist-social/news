@@ -6,7 +6,9 @@
 		"aggregator_type": "fightback",
 		"country": "Canada",
 		"province": null,
-		"last_cached": null
+		"last_cached": null,
+		"raw_data_hacks": null,
+		"post_object_hacks": ["fightback"]
 	}, {
 		"name": "La Riposte Socialiste",
 		"slug": "lrs-ca-qc",
@@ -14,7 +16,9 @@
 		"aggregator_type": "fightback",
 		"country": "Canada",
 		"province": "Québec",
-		"last_cached": null
+		"last_cached": null,
+		"raw_data_hacks": null,
+		"post_object_hacks": ["fightback"]
 	}, {
 		"name": "Esquerda Marxista",
 		"slug": "em-br",
@@ -22,7 +26,9 @@
 		"aggregator_type": "wordpress",
 		"country": "Brasil",
 		"province": null,
-		"last_cached": null
+		"last_cached": null,
+		"raw_data_hacks": null,
+		"post_object_hacks": null
 	}, {
 		"name": "Socialist Appeal",
 		"slug": "sa-gb",
@@ -30,7 +36,9 @@
 		"aggregator_type": "wordpress",
 		"country": "England",
 		"province": null,
-		"last_cached": null
+		"last_cached": null,
+		"raw_data_hacks": null,
+		"post_object_hacks": null
 	}, {
 		"name": "Lal Salaam",
 		"slug": "ls-pk",
@@ -38,6 +46,8 @@
 		"aggregator_type": "wordpress",
 		"country": "Pakistan",
 		"province": null,
-		"last_cached": null
+		"last_cached": null,
+		"raw_data_hacks": ["lal_salaam"],
+		"post_object_hacks": null
 	}
 ]

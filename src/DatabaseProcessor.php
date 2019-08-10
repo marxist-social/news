@@ -11,8 +11,11 @@ class DatabaseProcessor {
 	}
 
 	public function loadTablesIntoMemory($table_names) {
-		foreach($table_names as $table_name)
-			$this->loadTableIntoMemory($table_name);
+		if (!is_array($table_names) && is_string($table_names))
+			$this->loadTableIntoMemory($table_names); // fool. .. we will allow it.
+		else
+			foreach($table_names as $table_name)
+				$this->loadTableIntoMemory($table_name);
 	}
 
 	public function loadTableIntoMemory($table_name) {
