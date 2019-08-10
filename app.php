@@ -10,10 +10,14 @@ require __DIR__ . '/vendor/autoload.php';
 $db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor(__DIR__.'/db');
 
 // Create the home page view
-$view = new \MarxistSocialNews\View\Homepage($db, [
-	// TODO! make some home page components customizeable
-	/*'title' => 'International Marxist Tendency News Aggregator',
-	'footer' => 'Marxist.social News Aggregator is free software: '*/
+$view = new \MarxistSocialNews\View\Homepage($db, [ // TODO Load these strings from a translation file based on input query param (?)
+	'title' => 'International Marxist Tendency News Aggregator',
+	'logo' => __DIR__.'/img/imt-logo.jpg',
+	'favicon' => __DIR__.'/img/favicon.png',
+	'meta_description' => 'This web page contains recent articles from sections of the IMT. Use the table of contents to navigate directly to a section.',
+	'description' => '<p class="home__meta">This web page contains recent articles from sections of the IMT.</p>',
+	'footer' => 'Marxist.social News Aggregator is free software licensed under the GPL. To contribute code or report bugs, visit:',
+	'vc_repo' => 'https://github.com/marxist-social/news'
 ]);
 echo $view->render(); 
 

@@ -29,3 +29,6 @@ Code in `/src` is licensed under the GPL.
 * Customizations for home page
 * Write out the mailing list / notifications code
 * Separate `/src` into its own composer-optimized package (and repo?) (called Marxist.social News Aggregator). Then just have this repo reference it.
+* Translation for static text
+* Move CSS into `/src`
+* Add table of contents w/ anchor links based on list of sites

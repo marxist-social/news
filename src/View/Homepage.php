@@ -10,27 +10,26 @@ class Homepage extends View {
 					<meta name="viewport" content="width=device-width, initial-scale=1">
 					<meta charset="UTF-8">
 
-					<meta property="og:title" content="IMT RSS Aggregator" />
-					<meta property="og:type" content="website" />
-					<meta property="og:image" content="{$this->base_url}/img/imt-logo.jpg" />
-					<meta property="og:description" content="This aggregator displays the latest articles from Fightback, La Riposte, Esquerda Marxista, and Socialist appeal." /> 
+					<meta property="og:title" content="%title%"/>
+					<meta property="og:type" content="website"/>
+					<meta property="og:image" content="%logo%"/>
+					<meta property="og:description" content="%meta_description%" />
 
 					<link rel="stylesheet" type="text/css" href="{$this->base_url}/css/imtrss.css">
 					<link rel="stylesheet" type="text/css" href="{$this->base_url}/css/mobile-imtrss.css">
 					<title>IMT RSS Aggregator</title>
-					<link rel="icon" type="image/png" href="{$this->base_url}/img/favicon.png" />
+					<link rel="icon" type="image/png" href="%favicon%"/>
 				</head>
 				<body class="home__body">
-					<h1 class="home__title">Welcome to the IMT RSS aggregator!</h1>
-					<p class="home__meta">This page contains a list of IMT sections along with the six latest posts from their website.</p>
-					<p class="home__meta">This project is a work in progress. To contribute or report bugs, please visit <a href="https://github.com/junipermcintyre/imt-rss-aggregator" target="_blank">https://github.com/junipermcintyre/imt-rss-aggregator</a>.</p>
+					<h1 class="home__title">%title%</h1>
+					%description%
 					<hr  style="margin-top: 3rem;"/>
 					<div class="home__aggregators">
 						%aggregators%
 					</div>
 					<hr />
-					<p class="home__end">End of IMT RSS Aggregator</p>
-					<p class="home__footer_meta">Visit our international website at <a href="https://marxist.com/" target="_blank">https://marxist.com/</a>.</p>
+					<p class="home__end">End of %title%</p>
+					<p class="home__footer_meta">%footer% <a href="%vc_repo%" target="_blank">%vc_repo%</a>.</p>
 				</body>
 			</html>
 		TEMPLATE;
@@ -59,6 +58,9 @@ class Homepage extends View {
 		}
 
 		$template = str_replace('%aggregators%', $aggregators_html, $this->template);
+
+		// Perform SIMPLE replacements
+		$template = $this->performSimpleReplacements($template, $this->user_properties);
 
 		return $template;
 	}

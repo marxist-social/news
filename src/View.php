@@ -32,11 +32,14 @@ class View {
 	 * Take this view and render it to an HTML string
 	 */
 	public function render() {
-		// Perform SIMPLE replacements
-		$template = $this->template;
-		foreach ($this->user_properties as $prop_key => $prop_value) {
+		return $this->performSimpleReplacements($this->template, $this->user_properties);
+	}
+
+	public function performSimpleReplacements($template, $config) {
+		foreach ($config as $prop_key => $prop_value) {
 			$template = str_replace('%'.$prop_key.'%', $prop_value, $template);
 		}
+		
 		return $template;
 	}
 }
