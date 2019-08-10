@@ -39,15 +39,5 @@
 		"last_cached": null,
 		"raw_data_hacks": null,
 		"post_object_hacks": null
-	}, {
-		"name": "Lal Salaam",
-		"slug": "ls-pk",
-		"url": "https://www.marxist.pk/feed/atom",
-		"aggregator_type": "wordpress",
-		"country": "Pakistan",
-		"province": null,
-		"last_cached": null,
-		"raw_data_hacks": ["lal_salaam"],
-		"post_object_hacks": null
 	}
 ]
