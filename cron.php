@@ -9,8 +9,8 @@ require __DIR__ . '/vendor/autoload.php';
 
 // Run the services
 $services_to_run = [
-	'aggregator' => \ImtRssAggregator\CronService\AggregatorService::class, 
-	'notification' => \ImtRssAggregator\CronService\NotificationService::class
+	'aggregator' => \MarxistSocialNews\CronService\AggregatorService::class, 
+	'notification' => \MarxistSocialNews\CronService\NotificationService::class
 ];
 
 

@@ -5,6 +5,6 @@
     },
 
     "autoload": {
-        "psr-4": {"ImtRssAggregator\\": "src/"}
+        "psr-4": {"MarxistSocialNews\\": "src/"}
     }
 }	

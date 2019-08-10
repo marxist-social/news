@@ -1,10 +1,14 @@
 <?php
-namespace ImtRssAggregator\DatabaseProcessor;
-use ImtRssAggregator\DatabaseProcessor;
+namespace MarxistSocialNews\DatabaseProcessor;
+use MarxistSocialNews\DatabaseProcessor;
 
 class JsonDatabaseProcessor extends DatabaseProcessor {
 	public function loadTableIntoMemory($table_name) {
-		$this->tables[$table_name] = json_decode(file_get_contents($this->makeTablePath($table_name)));
+		// Check if it exists. If not, load empty array
+		if (file_exists($this->makeTablePath($table_name)))
+			$this->tables[$table_name] = json_decode(file_get_contents($this->makeTablePath($table_name)));
+		else
+			$this->tables[$table_name] = [];
 	}
 
 	public function saveWholeTable($table_name) {

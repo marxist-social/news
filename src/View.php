@@ -1,5 +1,5 @@
 <?php
-namespace ImtRssAggregator;
+namespace MarxistSocialNews;
 
 class View {
 

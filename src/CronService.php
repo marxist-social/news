@@ -1,5 +1,5 @@
 <?php
-namespace ImtRssAggregator;
+namespace MarxistSocialNews;
 
 class CronService {
 	public $previous_service_history = null;

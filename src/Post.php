@@ -1,6 +1,6 @@
 <?php
 
-namespace ImtRssAggregator;
+namespace MarxistSocialNews;
 
 class Post {
 	public $title;

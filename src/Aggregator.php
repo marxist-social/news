@@ -1,8 +1,8 @@
 <?php
-namespace ImtRssAggregator;
+namespace MarxistSocialNews;
 use Exception;
 
-class RssAggregator {
+class Aggregator {
 
 	public $user_agent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36";
 	public $site_info;
@@ -25,20 +25,28 @@ class RssAggregator {
  	 * @param int $n number of posts to fetch.
 	 */
 	public function fetchLatestPosts($n) {
-		$context = stream_context_create(["http" => [
-			"header" => "User-Agent: {$this->user_agent}"
-		]]);
-		$raw_rss_data = file_get_contents($this->site_info->url, false, $context);
-		
-		$raw_rss_data = $this->applyRawDataHacks($this->site_info->raw_data_hacks, $raw_rss_data); // TODOOO MORE HACKs! turn the fightback class into hacks. Add Lal Salaam hacks.
-		$posts = $this->parseRssIntoPosts($raw_rss_data);
-		$posts = $this->limitPosts($posts, $n);
-		$posts = $this->indexPosts($posts);
+		$raw_data = $this->retrieveRawDataFromSite(); // Get the raw data (re-implement on child classes)
+		$raw_data = $this->applyRawDataHacks($this->site_info->raw_data_hacks, $raw_data);
+
+		$posts = $this->parseRawDataIntoPosts($raw_data); // Parse raw data into Post objects (re-implement on children)
+		$posts = $this->applyPostObjectHacks($this->site_info->post_object_hacks, $posts);
+
+		$posts = $this->limitPosts($posts, $n); // limit em if needed
+		$posts = $this->indexPosts($posts); // Index em
 
 		$this->posts = $posts; // Array of post objects
 	}
 
-	public function parseRssIntoPosts($raw_rss_data) {
+	// Applies modifiers to the domain, queries for posts, returns raw result
+	public function retrieveRawDataFromSite() {
+		$context = stream_context_create(["http" => [
+			"header" => "User-Agent: {$this->user_agent}"
+		]]);
+		$raw_data = file_get_contents($this->site_info->url, false, $context);
+		return $raw_data;
+	}
+
+	public function parseRawDataIntoPosts($raw_data) {
 		throw new Exception("Please implement this method!!");
 	}
 
@@ -75,7 +83,7 @@ class RssAggregator {
 		// TODO (low prioerity)
 	}
 
-	// Hacks are applied to the data sequentially
+	// 'Hacks' are applied to the data sequentially
 	public function applyRawDataHacks($hack_function_names, $raw_data) {
 		if (!is_null($hack_function_names)) {
 			foreach ($hack_function_names as $hack_name) {
@@ -85,5 +93,17 @@ class RssAggregator {
 		}
 
 		return $raw_data;
+	}
+
+	// 'Hacks' are applied to the data sequentially
+	public function applyPostObjectHacks($hack_function_names, $post_objects) {
+		if (!is_null($hack_function_names)) {
+			foreach ($hack_function_names as $hack_name) {
+				$full_hack_name = $hack_name.'_post_object_hack';
+				$post_objects = $this->$full_hack_name($post_objects); // LOL this line
+			}
+		}
+
+		return $post_objects;
 	}
 }

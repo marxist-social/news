@@ -1,6 +1,6 @@
 <?php
-namespace ImtRssAggregator\View;
-use ImtRssAggregator\View;
+namespace MarxistSocialNews\View;
+use MarxistSocialNews\View;
 
 class Homepage extends View {
 	public function constructTemplate() {
@@ -50,7 +50,7 @@ class Homepage extends View {
 			$site_posts_table_name = 'article_cache/'.$site->slug;
 			$this->db->loadTableIntoMemory($site_posts_table_name);
 			foreach ($this->db->tables[$site_posts_table_name] as $post_array) {
-				$post = new \ImtRssAggregator\Post($post_array);
+				$post = new \MarxistSocialNews\Post($post_array);
 				$aggregator_post_html .= $post->getHtml();
 			}
 			$this->db->removeTableFromMemory($site_posts_table_name);
