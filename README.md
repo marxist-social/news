@@ -23,7 +23,6 @@ Code in `/src` is licensed under the GPL.
 
 ## Todo
 
-* Maybe a table of contents at top of homepage, with anchors to sections. Fixed on mobile?
 * Socialist appeal is only returning five articles, see if there's a way to get more (all joomla ones only send five .. :/)
 * Make the jsondatabaseprocessor read {'keys' => [...], 'data' => [...]} (default null basically. Is a bit tough...)
 * Customizations for home page
@@ -31,4 +30,5 @@ Code in `/src` is licensed under the GPL.
 * Separate `/src` into its own composer-optimized package (and repo?) (called Marxist.social News Aggregator). Then just have this repo reference it.
 * Translation for static text
 * Move CSS into `/src`
+* Reddit twitter bot hooks
 * Add table of contents w/ anchor links based on list of sites
