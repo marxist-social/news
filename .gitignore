@@ -2,10 +2,7 @@
 /vendor
 
 # Database
-db/*.json
-!db/example.*.json
-db/article_cache/*.json
-!db/article_cache/example.*.json
+db/*
 
 # logs
 logs/*
