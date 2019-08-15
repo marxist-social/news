@@ -6,7 +6,7 @@ class NotificationService extends CronService {
 
 	function run() {
 		// See if anyone needs their mail..
-		$db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor($this->db_path);
+		$db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor($this->db_config['path']);
 		$db->loadTableIntoMemory('mailing_list');
 
 		$count_people_notified = 0;

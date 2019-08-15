@@ -3,7 +3,7 @@ namespace MarxistSocialNews;
 
 class CronService {
 	public $previous_service_history = null;
-	public $db_path = null;
+	public $db_config = null;
 
 
 

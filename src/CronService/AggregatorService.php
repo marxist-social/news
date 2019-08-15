@@ -6,7 +6,7 @@ use Exception;
 class AggregatorService extends CronService {
 	function run() {
 		// Load the sites and application settings into memory from config/"db"
-		$db = $this->connectToDatabase(['path' => $this->db_path, 'tables' => ['sites', 'app_settings', 'app_status']]); // connectToDatabase good trait ?
+		$db = $this->connectToDatabase(['path' => $this->db_config['path'], 'seed' => $this->db_config['seed'], 'tables' => ['sites', 'app_settings', 'app_status']]); // connectToDatabase good trait ?
 
 		// Figure out which site has gone longest without an update
 		$site_and_index = $this->getLeastUpToDateSite($db->tables['sites']);
@@ -20,6 +20,9 @@ class AggregatorService extends CronService {
 
 		// Save them to the cache
 		$oldest_site_table_name = 'article_cache/'.$oldest_site->slug; // get table name
+		if (!$db->tableExistsInDatabase($oldest_site_table_name)) // create db table/cache if it doesnt already exist
+			$db->createTable($oldest_site_table_name);
+
 		$db->loadTablesIntoMemory($oldest_site_table_name);
 
 		// TODO -> function checkIfCanSkip - sees if all URLs are the same as the cached one
@@ -61,7 +64,7 @@ class AggregatorService extends CronService {
 	}
 
 	private function connectToDatabase($config) {
-		$db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor($config['path']);
+		$db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor($config['path'], $config['seed']);
 		$db->loadTablesIntoMemory($config['tables']);
 
 		return $db;
