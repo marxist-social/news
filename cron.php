@@ -15,10 +15,11 @@ $services_to_run = [
 
 
 $previous_service_data = [];
+$imt_seed = new \MarxistSocialNews\DatabaseSeed\ImtDatabaseSeed(); // or EmptySeed, SeedFromArray, SeedFromFile, etc...
 foreach ($services_to_run as $service_name => $service_class) {
 	$service = new $service_class([
 		'previous_service_history' => $previous_service_data, 
-		'db_path' => __DIR__.'/db'
+		'db_config' => ['path' => __DIR__.'/db', 'seed' => $imt_seed]
 	]);
 
 	$previous_service_data[$service_name] = $service->run();
@@ -26,8 +27,10 @@ foreach ($services_to_run as $service_name => $service_class) {
 
 
 // Done -> output 'output' key of prev_serv_data
+echo "\n";
 echo "[".date('Y-m-d H:i:s')."] Ran ".count($previous_service_data)." services.\n";
 foreach ($previous_service_data as $service_name => $prev_serv_data) {
 	 echo " ---> {$service_name}: {$prev_serv_data['output']}\n";
 }
+echo "\n";
 

@@ -7,7 +7,8 @@ date_default_timezone_set("America/Toronto");
 require __DIR__ . '/vendor/autoload.php';
 
 // Load the sites and application settings into memory from config/"db"
-$db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor(__DIR__.'/db');
+$imt_seed = new \MarxistSocialNews\DatabaseSeed\ImtDatabaseSeed(); // or EmptySeed, SeedFromArray, SeedFromFile, etc...
+$db = new \MarxistSocialNews\DatabaseProcessor\JsonDatabaseProcessor(__DIR__.'/db', $imt_seed);
 
 // Create the home page view
 $view = new \MarxistSocialNews\View\Homepage($db, [ // TODO Load these strings from a translation file based on input query param (?)
