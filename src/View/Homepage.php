@@ -9,12 +9,12 @@ class Homepage extends View {
 				<head>
 					<meta name="viewport" content="width=device-width, initial-scale=1">
 					<meta charset="UTF-8">
-
+					
 					<meta property="og:title" content="%title%"/>
 					<meta property="og:type" content="website"/>
 					<meta property="og:image" content="%logo%"/>
 					<meta property="og:description" content="%meta_description%" />
-
+					
 					<link rel="stylesheet" type="text/css" href="{$this->base_url}/css/imtrss.css">
 					<link rel="stylesheet" type="text/css" href="{$this->base_url}/css/mobile-imtrss.css">
 					<title>IMT RSS Aggregator</title>
