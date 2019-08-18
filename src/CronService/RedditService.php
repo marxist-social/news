@@ -40,7 +40,7 @@ class RedditService extends CronService {
 			}
 		}
 		return [
-			'output' => "Posted {$count_articles_posted} articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached)."."
+			'output' => "Posted ".count($new_posts)." articles for ".$oldest_site->name." to ".count($oldest_site->subreddits)." subreddits at ".date("d M Y H:i:s", $oldest_site->last_cached)."."
 		];
 	}
 
@@ -87,8 +87,9 @@ class RedditService extends CronService {
 		$response = json_decode(curl_exec($ch));
 
 		if(curl_errno($ch)) {
+			$error_str = "CURL error when initiating reddit: ".curl_error($ch);
 			curl_close($ch);
-			throw new Exception("CURL error when initiating reddit: ".curl_error($ch));
+			throw new Exception($error_str);
 		}
 		curl_close($ch);
 
@@ -108,9 +109,9 @@ class RedditService extends CronService {
 		));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, [
 			'kind' => 'link',
-			'resubmit' => false,
+			'resubmit' => true,
 			'sr' => $subreddit,
-			'title' => $post->title,
+			'title' => $this->cleanTitleUp($post->title),
 			'url' => $post->link
 		]);
 
@@ -118,11 +119,25 @@ class RedditService extends CronService {
 		$response = json_decode(curl_exec($ch));
 
 		if(curl_errno($ch)) {
+			$error_str = "CURL error when initiating reddit: ".curl_error($ch);
 			curl_close($ch);
-			throw new Exception("CURL error when initiating reddit: ".curl_error($ch));
+			throw new Exception($error_str);
 		}
 		curl_close($ch);
+	}
 
-		var_dump($response);
+	private function cleanTitleUp($title) {
+		$replacements = [
+			'&#8216;' => "‘",
+			'&#8217;' => "’",
+			'&#8220;' => '“',
+			'&#8221;' => '”',
+		];
+
+		foreach ($replacements as $search => $replace) {
+			$title = str_replace($search, $replace, $title);
+		}
+
+		return $title;
 	}
 }
