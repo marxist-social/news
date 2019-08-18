@@ -116,10 +116,11 @@ class DatabaseProcessor {
 					"last_cached" => null,
 					"raw_data_hacks" => null,
 					"post_object_hacks" => null,
-					"flags" => null
+					"flags" => null,
+					"services" => ["aggregate", "homepage"],
+					"subreddits" => null
 				]
 			]
 		];
 	}
 }
-
