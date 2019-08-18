@@ -131,10 +131,11 @@ class RedditService extends CronService {
 
 	private function cleanTitleUp($title) {
 		$replacements = [
+			'&#8211;' => "–",
 			'&#8216;' => "‘",
 			'&#8217;' => "’",
 			'&#8220;' => '“',
-			'&#8221;' => '”',
+			'&#8221;' => '”'
 		];
 
 		foreach ($replacements as $search => $replace) {
