@@ -36,7 +36,7 @@ class RedditService extends CronService {
 
 		foreach ($new_posts as $np) {
 			foreach ($oldest_site->subreddits as $sr) {
-				$this->postLinkToSubreddit($np, $sr);
+				$this->postLinkToSubreddit($np, $sr, $oldest_site);
 			}
 		}
 		return [
@@ -96,7 +96,10 @@ class RedditService extends CronService {
 		$this->reddit_config['bearer'] = $response->access_token;
 	}
 
-	private function postLinkToSubreddit($post, $subreddit) {
+	private function postLinkToSubreddit($post, $subreddit, $site) {
+		$title_prefix = "[News][".$site->name."] ";
+
+
 		$ch = curl_init();
 
 		// set URL and other appropriate optionsm
@@ -111,7 +114,7 @@ class RedditService extends CronService {
 			'kind' => 'link',
 			'resubmit' => true,
 			'sr' => $subreddit,
-			'title' => $this->cleanTitleUp($post->title),
+			'title' => $title_prefix.$this->cleanTitleUp($post->title),
 			'url' => $post->link
 		]);
 

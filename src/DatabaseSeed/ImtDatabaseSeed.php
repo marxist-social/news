@@ -44,9 +44,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
 					"province" => "Québec",
-					"raw_data_hacks" => ["fightback"],
-					"services" => ["homepage", "notify", "aggregate", "reddit"],
-					"subreddits" => ["JunesBots"]
+					"raw_data_hacks" => ["fightback"]
 				], [
 					"name" => "Socialist Revolution",
 					"slug" => "sr-org",
