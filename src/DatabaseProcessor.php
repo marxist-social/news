@@ -118,7 +118,7 @@ class DatabaseProcessor {
 					"post_object_hacks" => null,
 					"flags" => null,
 					"services" => ["aggregate", "homepage", "reddit"],
-					"subreddits" => ["JunesBots"]
+					"subreddits" => []
 				]
 			]
 		];
