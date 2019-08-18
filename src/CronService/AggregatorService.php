@@ -4,7 +4,10 @@ use MarxistSocialNews\CronService;
 use Exception;
 
 class AggregatorService extends CronService {
-	function run() {
+	public $new_post_indexes = [];
+
+	// TODOOO only include sites using aggregate service
+	public function run() {
 		// Load the sites and application settings into memory from config/"db"
 		$db = $this->connectToDatabase(['path' => $this->db_config['path'], 'seed' => $this->db_config['seed'], 'tables' => ['sites', 'app_settings', 'app_status']]); // connectToDatabase good trait ?
 
@@ -25,7 +28,6 @@ class AggregatorService extends CronService {
 
 		$db->loadTablesIntoMemory($oldest_site_table_name);
 
-		// TODO -> function checkIfCanSkip - sees if all URLs are the same as the cached one
 
 		if (!is_null($db->tables[$oldest_site_table_name])) // This maintains indexes.
 			$db->tables[$oldest_site_table_name] = $this->modifyArrayWithUrlIndexing($aggregator->posts, $db->tables[$oldest_site_table_name]);
@@ -48,8 +50,9 @@ class AggregatorService extends CronService {
 
 		// And return the output + info other services will need
 		return [
-			'output' => "Aggregated {$count_articles_cached} articles for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".",
-			'oldest_site' => $oldest_site
+			'output' => "Aggregated {$count_articles_cached} articles (".count($this->new_post_indexes)." new) for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".",
+			'oldest_site' => $oldest_site,
+			'new_post_indexes' => $this->new_post_indexes
 		];
 	}
 
@@ -107,15 +110,25 @@ class AggregatorService extends CronService {
 		// As it stands, they're not? or NP is, OP isn't...
 
 		$overwrite_table = [];
-
+		$new_post_indexes = [];
 		if (!is_null($new_posts) && !is_null($old_posts)) // beautiful
-			foreach ($new_posts as $n_key => $np)
-				foreach ($old_posts as $o_key => $op)
-					if ($np->link === $op->link)
+			foreach ($new_posts as $n_key => $np) {
+				$matched = false;
+				foreach ($old_posts as $o_key => $op) {
+					if ($np->link === $op->link) {
 						$new_posts[$n_key]->index = $op->index;
+						$matched = true;
+						break;
+					}
+				}
+
+				if (!$matched) // If it wasnt matched to an old one, its the first time the link has been in the aggregator.
+					array_push($new_post_indexes, $np->index);
+			}
+
+		// TRACK THE INDEXES FOR WHICH ONES ARE ACTUALLY "NEW"
+		$this->new_post_indexes = $new_post_indexes;
 
 		return $new_posts;
-
-		// it would maybe be nice to see how many were re-indexed.
 	}
 }

@@ -6,20 +6,28 @@ date_default_timezone_set("America/Toronto");
 // Autoload our classes
 require __DIR__ . '/vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
 
 // Run the services
 $services_to_run = [
-	'aggregator' => \MarxistSocialNews\CronService\AggregatorService::class, 
-	'notification' => \MarxistSocialNews\CronService\NotificationService::class
+	'aggregate' => \MarxistSocialNews\CronService\AggregatorService::class, 
+	'notify' => \MarxistSocialNews\CronService\NotificationService::class,
+	'reddit' => \MarxistSocialNews\CronService\RedditService::class
 ];
-
 
 $previous_service_data = [];
 $imt_seed = new \MarxistSocialNews\DatabaseSeed\ImtDatabaseSeed(); // or EmptySeed, SeedFromArray, SeedFromFile, etc...
 foreach ($services_to_run as $service_name => $service_class) {
 	$service = new $service_class([
 		'previous_service_history' => $previous_service_data, 
-		'db_config' => ['path' => __DIR__.'/db', 'seed' => $imt_seed]
+		'db_config' => ['path' => __DIR__.'/db', 'seed' => $imt_seed],
+		'reddit_config' => [
+			'user' => getenv('REDDIT_USER'), 
+			'pass' => getenv('REDDIT_PASS'), 
+			'client' => getenv('REDDIT_CLIENT_ID'), 
+			'secret' => getenv('REDDIT_SECRET')
+		]
 	]);
 
 	$previous_service_data[$service_name] = $service->run();

@@ -9,3 +9,5 @@ logs/*
 
 # scrap notes
 scrap_notes.md
+
+.env
