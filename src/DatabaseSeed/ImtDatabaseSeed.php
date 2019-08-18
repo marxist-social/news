@@ -37,7 +37,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"url" => "https://admin.marxist.ca/",
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
-					"raw_data_hacks" => ["fightback"],,
+					"raw_data_hacks" => ["fightback"],
 					"subreddits" => ['imt']
 				], [
 					"name" => "La Riposte Socialiste",
