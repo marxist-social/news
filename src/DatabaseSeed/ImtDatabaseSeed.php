@@ -29,14 +29,16 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"slug" => "mx-com",
 					"url" => "https://marxist.com/",
 					"aggregator_type" => "rss-atom",
-					"country" => "International"
+					"country" => "International",
+					"subreddits" => ['imt']
 				], [
 					"name" => "Fightback",
 					"slug" => "fb-ca",
 					"url" => "https://admin.marxist.ca/",
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
-					"raw_data_hacks" => ["fightback"],
+					"raw_data_hacks" => ["fightback"],,
+					"subreddits" => ['imt']
 				], [
 					"name" => "La Riposte Socialiste",
 					"slug" => "lrs-ca-qc",
@@ -44,7 +46,8 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
 					"province" => "Québec",
-					"raw_data_hacks" => ["fightback"]
+					"raw_data_hacks" => ["fightback"],
+					"subreddits" => ['imt']
 				], [
 					"name" => "Socialist Revolution",
 					"slug" => "sr-org",
@@ -52,25 +55,29 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"aggregator_type" => "wordpress-api",
 					"country" => "USA",
 					"raw_data_hacks" => ["socialist_revolution"],
-					"flags" => ["uses-no-api-prefix"]
+					"flags" => ["uses-no-api-prefix"],
+					"subreddits" => ['imt']
 				], [
 					"name" => "Esquerda Marxista",
 					"slug" => "em-br",
 					"url" => "https://www.marxismo.org.br/",
 					"aggregator_type" => "rss-atom",
-					"country" => "Brasil"
+					"country" => "Brasil",
+					"subreddits" => ['imt']
 				], [
 					"name" => "Socialist Appeal",
 					"slug" => "sa-gb",
 					"url" => "https://www.socialist.net/",
 					"aggregator_type" => "rss-atom",
-					"country" => "England"
+					"country" => "England",
+					"subreddits" => ['imt']
 				], [
 					"name" => "Lal Salaam",
 					"slug" => "ls-pk",
 					"url" => "https://www.marxist.pk/",
 					"aggregator_type" => "wordpress-api",
-					"country" => "Pakistan"
+					"country" => "Pakistan",
+					"subreddits" => ['imt']
 				]
 			]
 		]);
