@@ -114,6 +114,13 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"flags" => ["rss-home", "use-curl"],
 					"country" => "France",
 					"subreddits" => ['imt']
+				], [
+					"name" => "La Izquierda Socialista",
+					"slug" => "is-mx",
+					"url" => "https://marxismo.mx/",
+					"aggregator_type" => "wordpress-api",
+					"country" => "Mexico",
+					"subreddits" => ['imt']
 				]
 			]
 		]);
