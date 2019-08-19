@@ -37,7 +37,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"url" => "https://admin.marxist.ca/",
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
-					"raw_data_hacks" => ["fightback"],,
+					"raw_data_hacks" => ["fightback"],
 					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "La Riposte Socialiste",
@@ -82,9 +82,8 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"name" => "El Militante",
 					"slug" => "em-ar",
 					"url" => "https://argentina.elmilitante.org/",
-					"aggregator_type" => "rss-atom",
+					"aggregator_type" => "alternate-rss-atom",
 					"country" => "Argentina",
-					"flags" => ["old-joomla"],
 					"subreddits" => ['JunesBots'] // ['imt']
 				]
 			]

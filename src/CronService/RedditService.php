@@ -7,6 +7,7 @@ class RedditService extends CronService {
 
 	public $reddit_config = [];
 	public $user_agent = "Marxist.Social News Aggregator / news.marxist.social";
+	public $sub_output = [];
 
 	public function run() {
 		$oldest_site = $this->previous_service_history['aggregate']['oldest_site'];
@@ -34,16 +35,30 @@ class RedditService extends CronService {
 		$this->initiateReddit($db); // Initial oAuth request, get bearer token
 		$new_posts = $this->getPostsFromIndexes($db->tables[$oldest_site_table_name], $new_post_indexes);
 
+		$published_posts = 0;
 		foreach ($new_posts as $np) {
 			foreach ($oldest_site->subreddits as $sr) {
-				$this->postLinkToSubreddit($np, $sr, $oldest_site);
+				if ($this->postLinkToSubreddit($np, $sr, $oldest_site))
+					$published_posts++;
 			}
 
 			// Just do one for now... let's not be an annoying bot.
-			break;
+			if ($published_posts > 0) {
+				$this->output("Stopped after ".$published_posts." were posted.");
+				break;
+			}
+		}
+
+		$output = "Posted ".$published_posts." articles successfully (out of "
+				.count($new_posts) * count($oldest_site->subreddits).") for "
+				.$oldest_site->name." to ".count($oldest_site->subreddits)
+				." subreddits at ".date("d M Y H:i:s", $oldest_site->last_cached).".";
+
+		foreach ($this->sub_output as  $sub_out) {
+			$output .= "\n".$sub_out;
 		}
 		return [
-			'output' => "Posted ".count($new_posts)." articles for ".$oldest_site->name." to ".count($oldest_site->subreddits)." subreddits at ".date("d M Y H:i:s", $oldest_site->last_cached)."."
+			'output' => $output
 		];
 	}
 
@@ -132,7 +147,12 @@ class RedditService extends CronService {
 		curl_close($ch);
 
 		// See what our response was like
-		var_dump($response);
+		if (!$response->success) {
+			$this->output("Could not post successfully: ".$response->jquery[18][3][0]." - ".$response->jquery[22][3][0]);
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	private function cleanTitleUp($title) {
@@ -152,6 +172,6 @@ class RedditService extends CronService {
 	}
 
 	private function output($str) {
-		echo "      ".$str;
+		array_push($this->sub_output, "      ".$str);
 	}
 }
