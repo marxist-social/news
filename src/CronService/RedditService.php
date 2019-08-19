@@ -151,6 +151,8 @@ class RedditService extends CronService {
 
 			if (isset($response->jquery[18][3][0]) && isset($response->jquery[22][3][0]))
 				$this->output("Could not post successfully: ".$response->jquery[18][3][0]." - ".$response->jquery[22][3][0]);
+			elseif (isset($response->jquery[16][3][0]) && isset($response->jquery[20][3][0]))
+				$this->output("Could not post successfully: ".$response->jquery[16][3][0]." - ".$response->jquery[20][3][0]);
 			else
 				$this->output("Could not post successfully: ".print_r($response, true));
 			return false;
