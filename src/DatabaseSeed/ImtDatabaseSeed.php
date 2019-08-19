@@ -24,13 +24,13 @@ class ImtDatabaseSeed extends DatabaseSeed {
 				]
 			],
 			'sites' => [
-				/*[
+				[
 					"name" => "IMT Center",
 					"slug" => "mx-com",
 					"url" => "https://marxist.com/",
 					"aggregator_type" => "rss-atom",
 					"country" => "International",
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "Fightback",
 					"slug" => "fb-ca",
@@ -38,7 +38,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
 					"raw_data_hacks" => ["fightback"],
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "La Riposte Socialiste",
 					"slug" => "lrs-ca-qc",
@@ -47,7 +47,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"country" => "Canada",
 					"province" => "Québec",
 					"raw_data_hacks" => ["fightback"],
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "Socialist Revolution",
 					"slug" => "sr-org",
@@ -56,49 +56,64 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"country" => "USA",
 					"raw_data_hacks" => ["socialist_revolution"],
 					"flags" => ["uses-no-api-prefix"],
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "Esquerda Marxista",
 					"slug" => "em-br",
 					"url" => "https://www.marxismo.org.br/",
 					"aggregator_type" => "rss-atom",
 					"country" => "Brasil",
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "Socialist Appeal",
 					"slug" => "sa-gb",
 					"url" => "https://www.socialist.net/",
 					"aggregator_type" => "rss-atom",
 					"country" => "England",
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "Lal Salaam",
 					"slug" => "ls-pk",
 					"url" => "https://www.marxist.pk/",
 					"aggregator_type" => "wordpress-api",
 					"country" => "Pakistan",
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "El Militante",
 					"slug" => "em-ar",
 					"url" => "https://argentina.elmilitante.org/",
 					"aggregator_type" => "alternate-rss-atom",
 					"country" => "Argentina",
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
 				], [
 					"name" => "Révolution",
 					"slug" => "rv-be",
 					"url" => "https://marxiste.be/",
 					"aggregator_type" => "alternate-rss-atom",
 					"country" => "Belgium",
-					"subreddits" => ['JunesBots'] // ['imt']
-				],*/ [
+					"subreddits" => ['imt']
+				], [
 					"name" => "Враг Капитала",
 					"slug" => "bk-ru",
 					"url" => "http://www.1917.com/",
 					"aggregator_type" => "leaflet-xml",
 					"country" => "Russia",
-					"subreddits" => ['JunesBots'] // ['imt']
+					"subreddits" => ['imt']
+				], [
+					"name" => "Bloque Popular Juvenil",
+					"slug" => "bj-es",
+					"url" => "https://bloquepopularjuvenil.org/",
+					"aggregator_type" => "wordpress-api",
+					"country" => "El Salvador",
+					"subreddits" => ['imt']
+				], [
+					"name" => "Révolution",
+					"slug" => "rv-fr",
+					"url" => "https://www.marxiste.org/",
+					"aggregator_type" => "alternate-rss-atom",
+					"flags" => ["rss-home", "use-curl"],
+					"country" => "France",
+					"subreddits" => ['imt']
 				]
 			]
 		]);
