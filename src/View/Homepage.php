@@ -45,16 +45,19 @@ class Homepage extends View {
 
 		$aggregators_html = '';
 		foreach ($this->db->tables['sites'] as $site) {
-			$aggregator_post_html = ""; // Get individual post html
 			$site_posts_table_name = 'article_cache/'.$site->slug;
-			$this->db->loadTableIntoMemory($site_posts_table_name);
-			foreach ($this->db->tables[$site_posts_table_name] as $post_array) {
-				$post = new \MarxistSocialNews\Post($post_array);
-				$aggregator_post_html .= $post->getHtml();
-			}
-			$this->db->removeTableFromMemory($site_posts_table_name);
+			if ($this->db->tableExistsInDatabase($site_posts_table_name)) {
 
-			$aggregators_html .= $this->makeAggregatorHtml(['site' => $site, 'post_html' => $aggregator_post_html]);
+				$aggregator_post_html = ""; // Get individual post html
+				$this->db->loadTableIntoMemory($site_posts_table_name);
+				foreach ($this->db->tables[$site_posts_table_name] as $post_array) {
+					$post = new \MarxistSocialNews\Post($post_array);
+					$aggregator_post_html .= $post->getHtml();
+				}
+				$this->db->removeTableFromMemory($site_posts_table_name);
+
+				$aggregators_html .= $this->makeAggregatorHtml(['site' => $site, 'post_html' => $aggregator_post_html]);
+			}
 		}
 
 		$template = str_replace('%aggregators%', $aggregators_html, $this->template);
