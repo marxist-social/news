@@ -38,6 +38,9 @@ class RedditService extends CronService {
 			foreach ($oldest_site->subreddits as $sr) {
 				$this->postLinkToSubreddit($np, $sr, $oldest_site);
 			}
+
+			// Just do one for now... let's not be an annoying bot.
+			break;
 		}
 		return [
 			'output' => "Posted ".count($new_posts)." articles for ".$oldest_site->name." to ".count($oldest_site->subreddits)." subreddits at ".date("d M Y H:i:s", $oldest_site->last_cached)."."
@@ -112,7 +115,7 @@ class RedditService extends CronService {
 		));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, [
 			'kind' => 'link',
-			'resubmit' => true,
+			'resubmit' => false, // Let's not be obnoxious by mistake
 			'sr' => $subreddit,
 			'title' => $title_prefix.$this->cleanTitleUp($post->title),
 			'url' => $post->link
@@ -127,6 +130,9 @@ class RedditService extends CronService {
 			throw new Exception($error_str);
 		}
 		curl_close($ch);
+
+		// See what our response was like
+		var_dump($response);
 	}
 
 	private function cleanTitleUp($title) {
@@ -143,5 +149,9 @@ class RedditService extends CronService {
 		}
 
 		return $title;
+	}
+
+	private function output($str) {
+		echo "      ".$str;
 	}
 }

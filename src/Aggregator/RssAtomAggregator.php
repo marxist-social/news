@@ -11,7 +11,11 @@ class RssAtomAggregator extends Aggregator {
 		]]);
 
 		$api_url = (substr($this->site_info->url, -1) === '/') ? $this->site_info->url : $this->site_info->url.'/';
-		$api_url .= 'feed/atom';
+		
+		if (in_array('old-joomla', $this->site_info->flags))
+			$api_url .= 'index.php?format=feed&type=rss';
+		else
+			$api_url .= 'feed/atom';
 
 		$raw_data = file_get_contents($api_url, false, $context);
 		return $raw_data;

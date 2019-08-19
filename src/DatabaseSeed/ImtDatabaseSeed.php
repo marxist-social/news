@@ -30,15 +30,15 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"url" => "https://marxist.com/",
 					"aggregator_type" => "rss-atom",
 					"country" => "International",
-					"subreddits" => ['imt']
+					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "Fightback",
 					"slug" => "fb-ca",
 					"url" => "https://admin.marxist.ca/",
 					"aggregator_type" => "wordpress-api",
 					"country" => "Canada",
-					"raw_data_hacks" => ["fightback"],
-					"subreddits" => ['imt']
+					"raw_data_hacks" => ["fightback"],,
+					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "La Riposte Socialiste",
 					"slug" => "lrs-ca-qc",
@@ -47,7 +47,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"country" => "Canada",
 					"province" => "Québec",
 					"raw_data_hacks" => ["fightback"],
-					"subreddits" => ['imt']
+					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "Socialist Revolution",
 					"slug" => "sr-org",
@@ -56,28 +56,36 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"country" => "USA",
 					"raw_data_hacks" => ["socialist_revolution"],
 					"flags" => ["uses-no-api-prefix"],
-					"subreddits" => ['imt']
+					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "Esquerda Marxista",
 					"slug" => "em-br",
 					"url" => "https://www.marxismo.org.br/",
 					"aggregator_type" => "rss-atom",
 					"country" => "Brasil",
-					"subreddits" => ['imt']
+					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "Socialist Appeal",
 					"slug" => "sa-gb",
 					"url" => "https://www.socialist.net/",
 					"aggregator_type" => "rss-atom",
 					"country" => "England",
-					"subreddits" => ['imt']
+					"subreddits" => ['JunesBots'] // ['imt']
 				], [
 					"name" => "Lal Salaam",
 					"slug" => "ls-pk",
 					"url" => "https://www.marxist.pk/",
 					"aggregator_type" => "wordpress-api",
 					"country" => "Pakistan",
-					"subreddits" => ['imt']
+					"subreddits" => ['JunesBots'] // ['imt']
+				], [
+					"name" => "El Militante",
+					"slug" => "em-ar",
+					"url" => "https://argentina.elmilitante.org/",
+					"aggregator_type" => "rss-atom",
+					"country" => "Argentina",
+					"flags" => ["old-joomla"],
+					"subreddits" => ['JunesBots'] // ['imt']
 				]
 			]
 		]);
