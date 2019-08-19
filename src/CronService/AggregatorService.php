@@ -61,7 +61,8 @@ class AggregatorService extends CronService {
 		$types = [
 			'wordpress-api' => \MarxistSocialNews\Aggregator\WordPressApiAggregator::class,
 			'rss-atom' => \MarxistSocialNews\Aggregator\RssAtomAggregator::class,
-			'alternate-rss-atom' => \MarxistSocialNews\Aggregator\AlternateRssAtomAggregator::class
+			'alternate-rss-atom' => \MarxistSocialNews\Aggregator\AlternateRssAtomAggregator::class,
+			'leaflet-xml' => \MarxistSocialNews\Aggregator\LeafletXmlAggregator::class
 		];
 
 		return $types[$type_name];

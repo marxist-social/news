@@ -24,7 +24,7 @@ class ImtDatabaseSeed extends DatabaseSeed {
 				]
 			],
 			'sites' => [
-				[
+				/*[
 					"name" => "IMT Center",
 					"slug" => "mx-com",
 					"url" => "https://marxist.com/",
@@ -84,6 +84,20 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"url" => "https://argentina.elmilitante.org/",
 					"aggregator_type" => "alternate-rss-atom",
 					"country" => "Argentina",
+					"subreddits" => ['JunesBots'] // ['imt']
+				], [
+					"name" => "Révolution",
+					"slug" => "rv-be",
+					"url" => "https://marxiste.be/",
+					"aggregator_type" => "alternate-rss-atom",
+					"country" => "Belgium",
+					"subreddits" => ['JunesBots'] // ['imt']
+				],*/ [
+					"name" => "Враг Капитала",
+					"slug" => "bk-ru",
+					"url" => "http://www.1917.com/",
+					"aggregator_type" => "leaflet-xml",
+					"country" => "Russia",
 					"subreddits" => ['JunesBots'] // ['imt']
 				]
 			]
