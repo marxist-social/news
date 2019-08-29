@@ -167,7 +167,9 @@ class RedditService extends CronService {
 			'&#8216;' => "‘",
 			'&#8217;' => "’",
 			'&#8220;' => '“',
-			'&#8221;' => '”'
+			'&#8221;' => '”',
+			'&rsquo;' => '’',
+			'&lsquo;' => '‘' 
 		];
 
 		foreach ($replacements as $search => $replace) {
