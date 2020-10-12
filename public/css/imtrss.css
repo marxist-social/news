@@ -6,8 +6,28 @@ html, body {
 }
 
 /* General homepage stuffs */
+a {
+	color: #d22820;
+	box-shadow: 0 0 0 0 #d22820;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #981117;
+}
+
+a:focus {
+	box-shadow: 0 0 0 3px #d22820;
+}
+
+a:focus, a:hover {
+	text-decoration: underline;
+}
+
 .home__body {
-	margin-bottom: 2rem;	
+	padding: 2rem calc(2rem + 5px);
+	max-width: 1300px;
+	margin: auto;
 }
 
 .home__title {
@@ -16,7 +36,7 @@ html, body {
 }
 
 .home__meta {
-	text-align: center;	
+	text-align: center;
 }
 
 .home__end {
@@ -31,8 +51,38 @@ html, body {
 	font-style: italic;
 }
 
+/* Table of contents related */
+.aggregator {
+	position: relative;
+}
 
-/* Related to the mass of aggregators */
+.aggregator__contents {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 1rem;
+	list-style: none;
+}
+
+.aggregator__contents > li {
+	width: 300px;
+	position: relative;
+	font-weight: bold;
+}
+
+.aggregator__contents > li > ul {
+	position: relative;
+	top: -1em;
+	list-style: none;
+	margin: 0;
+	padding: 0 0 0 calc(1em + 10px);
+}
+
+.aggregator__contents > li > ul > li {
+	font-weight: 400;
+}
+
+	/* Related to the mass of aggregators */
 .aggregator__latest_posts {
 	display: flex;
 	flex-wrap: wrap;
@@ -41,12 +91,12 @@ html, body {
 .aggregator__meta {
 	margin: 0;
 	font-style: italic;
-	text-align: center;
 }
 
 .aggregator__title {
 	margin: 1rem 0 0 0;
-	text-align: center;
+	position: relative;
+	left: -2rem;
 }
 
 
@@ -59,6 +109,11 @@ html, body {
 .aggregator__title small {
 	font-style: italic;
 	font-weight: 400;
+}
+
+.post__blurb {
+	max-height: 295px;
+	overflow-y: hidden;
 }
 
 .post__blurb img {

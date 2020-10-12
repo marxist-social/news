@@ -24,6 +24,10 @@ class Homepage extends View {
 					<h1 class="home__title">%title%</h1>
 					%description%
 					<hr  style="margin-top: 3rem;"/>
+					<div class="home__contents">
+						%contents%
+					</div>
+					<hr  style="margin-top: 3rem;"/>
 					<div class="home__aggregators">
 						%aggregators%
 					</div>
@@ -44,6 +48,7 @@ class Homepage extends View {
 
 
 		$aggregators_html = '';
+		$indexed_sites = [];
 		foreach ($this->db->tables['sites'] as $site) {
 			$site_posts_table_name = 'article_cache/'.$site->slug;
 			if ($this->db->tableExistsInDatabase($site_posts_table_name)) {
@@ -58,9 +63,27 @@ class Homepage extends View {
 
 				$aggregators_html .= $this->makeAggregatorHtml(['site' => $site, 'post_html' => $aggregator_post_html]);
 			}
+
+			$letter = strtolower($site->country[0]);
+			if (!isset($indexed_sites[$letter])) {
+			    $indexed_sites[$letter] = [];
+            }
+			array_push($indexed_sites[$letter], $site);
 		}
 
+		$content_html = "<ul class='aggregator__contents'>";
+		ksort($indexed_sites);
+		foreach ($indexed_sites as $letter => $sites) {
+            $content_html .= "<li>".strtoupper($letter)."<ul>";
+            foreach ($sites as $site) {
+                $content_html .= "<li><a href='#".$site->slug."'>".$site->country." | ".$site->name."</a></li>";
+            }
+            $content_html .= "</ul></li>";
+        }
+		$content_html .= "</ul>";
+
 		$template = str_replace('%aggregators%', $aggregators_html, $this->template);
+        $template = str_replace('%contents%', $content_html, $template);
 
 		// Perform SIMPLE replacements
 		$template = $this->performSimpleReplacements($template, $this->user_properties);
@@ -77,7 +100,7 @@ class Homepage extends View {
 		return <<<TEMPLATE
 			<hr />
 			<div class="aggregator">
-				<h2 class="aggregator__title">{$args['site']->name} 
+				<h2 class="aggregator__title" id="{$args['site']->slug}">{$args['site']->name} 
 					<small>{$args['site']->country}{$province}</small>
 				</h2>
 				<p class="aggregator__meta">Cached {$last_cached_date}</p>
