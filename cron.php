@@ -12,8 +12,8 @@ $dotenv->load();
 // Run the services
 $services_to_run = [
 	'aggregate' => \MarxistSocialNews\CronService\AggregatorService::class, 
-	'notify' => \MarxistSocialNews\CronService\NotificationService::class,
-	'reddit' => \MarxistSocialNews\CronService\RedditService::class
+	// 'notify' => \MarxistSocialNews\CronService\NotificationService::class,
+	// 'reddit' => \MarxistSocialNews\CronService\RedditService::class
 ];
 
 $previous_service_data = [];

@@ -46,6 +46,11 @@ class Aggregator {
 		return $raw_data;
 	}
 
+    /**
+     * @param $raw_data
+     * @return array|void
+     * @throws Exception
+     */
 	public function parseRawDataIntoPosts($raw_data) {
 		throw new Exception("Please implement this method!!");
 	}

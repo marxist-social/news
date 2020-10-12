@@ -1,0 +1,27 @@
+
+Fix revolution, their joomla feed is broke
+https://www.marxiste.org/index.php?format=feed&type=rss
+
+      {
+        "name": "Révolution",
+        "slug": "rv-fr",
+        "url": "https://www.marxiste.org/",
+        "aggregator_type": "alternate-rss-atom",
+        "country": "France",
+        "province": null,
+        "last_cached": 1602534164,
+        "raw_data_hacks": null,
+        "post_object_hacks": null,
+        "flags": [
+          "rss-home",
+          "use-curl"
+        ],
+        "services": [
+          "aggregate",
+          "homepage",
+          "reddit"
+        ],
+        "subreddits": [
+          "imt"
+        ]
+      }

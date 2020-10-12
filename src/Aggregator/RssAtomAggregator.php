@@ -16,7 +16,11 @@ class RssAtomAggregator extends Aggregator {
 		$raw_data = file_get_contents($api_url, false, $context);
 		return $raw_data;
 	}
-	
+
+    /**
+     * @param $raw_data
+     * @return array|void
+     */
 	public function parseRawDataIntoPosts($raw_data) {
 		$parsed_rss_posts = [];
 		$rss_simple_xml = simplexml_load_string($raw_data);

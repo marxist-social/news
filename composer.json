@@ -2,7 +2,10 @@
 	"require": {
 		"php": ">=7",
 		"phpmailer/phpmailer": "~6.0",
-		"vlucas/phpdotenv": "~3.4"
+		"vlucas/phpdotenv": "~3.4",
+      "ext-curl": "*",
+      "ext-simplexml": "*",
+      "ext-json": "*"
     },
 
     "autoload": {

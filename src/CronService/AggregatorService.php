@@ -50,7 +50,7 @@ class AggregatorService extends CronService {
 
 		// And return the output + info other services will need
 		return [
-			'output' => "Aggregated {$count_articles_cached} articles (".count($this->new_post_indexes)." new) for ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".",
+			'output' => "Aggregated {$count_articles_cached} articles (".count($this->new_post_indexes)." new) for [".$oldest_site->slug."] ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".",
 			'oldest_site' => $oldest_site,
 			'new_post_indexes' => $this->new_post_indexes
 		];

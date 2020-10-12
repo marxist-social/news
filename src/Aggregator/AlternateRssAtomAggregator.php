@@ -61,4 +61,13 @@ class AlternateRssAtomAggregator extends Aggregator {
 
 		return $parsed_rss_posts;
 	}
+
+    /**
+     * Get rid of them all except the first...
+     * @param Post[] $posts
+     * @return Post[]
+     */
+    public function marxiste_be_post_object_hack(array $posts) { // Runs before parseRawDataIntoPosts
+        return [$posts[0]];
+    }
 }
