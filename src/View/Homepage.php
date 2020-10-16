@@ -50,6 +50,8 @@ class Homepage extends View {
 		$aggregators_html = '';
 		$indexed_sites = [];
 		foreach ($this->db->tables['sites'] as $site) {
+		    if (!in_array('homepage', $site->services))
+		        continue;
 			$site_posts_table_name = 'article_cache/'.$site->slug;
 			if ($this->db->tableExistsInDatabase($site_posts_table_name)) {
 
