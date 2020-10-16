@@ -79,12 +79,17 @@ class AggregatorService extends CronService {
 		$oldest_site = null;
 
 		foreach ($sites_array as $site_index => $site) {
+            if (property_exists($site, "priority") && $site->priority)
+                return ['site' => $site, 'index' => $site_index];
+
 			if (is_null($oldest_site) || 
 				is_null($site->last_cached) ||
 				$site->last_cached < $oldest_site->last_cached) {
-				
-				$oldest_site = $site;
-				$oldest_site_index = $site_index;
+
+			    if (in_array('aggregate',$site->services)) {
+                    $oldest_site = $site;
+                    $oldest_site_index = $site_index;
+                }
 			}
 		}
 

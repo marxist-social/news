@@ -15,6 +15,9 @@ class AlternateRssAtomAggregator extends Aggregator {
 		else
 			$api_url .= 'index.php?format=feed&type=rss';
 
+        if (property_exists($this->site_info, "feed_url"))
+            $api_url = $this->site_info->feed_url;
+
 		if (!is_null($this->site_info->flags) && in_array('use-curl', $this->site_info->flags)) {
 			// set URL and other appropriate optionsm
 			$ch = curl_init();
@@ -51,7 +54,7 @@ class AlternateRssAtomAggregator extends Aggregator {
 		foreach ($rss_simple_xml->channel->item as $simple_xml_post) {
 			array_push($parsed_rss_posts, new Post([
 				'title' => (string) $simple_xml_post->title,
-				'author' => (string) $simple_xml_post->author,
+				'author' => (string) $simple_xml_post->author === '' ? $this->site_info->name : (string) $simple_xml_post->author,
 				'post_date' => (string) $simple_xml_post->pubDate,
 				'category' => (string) $simple_xml_post->category,
 				'blurb' => (string) $simple_xml_post->description,

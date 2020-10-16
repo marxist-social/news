@@ -13,6 +13,9 @@ class RssAtomAggregator extends Aggregator {
 		$api_url = (substr($this->site_info->url, -1) === '/') ? $this->site_info->url : $this->site_info->url.'/';
 		$api_url .= 'feed/atom';
 
+		if (property_exists($this->site_info, "feed_url"))
+		    $api_url = $this->site_info->feed_url;
+
 		$raw_data = file_get_contents($api_url, false, $context);
 		return $raw_data;
 	}

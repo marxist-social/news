@@ -122,7 +122,17 @@ class ImtDatabaseSeed extends DatabaseSeed {
 					"country" => "Mexico",
 					"subreddits" => ['imt']
 				]
-			]
+			],
+            'discord_bots' => [
+                [
+                    'id' => 'botsky',
+                    'name' => 'Botsky',
+                    'news_listener_url' => 'http://localhost:3000/news',
+                    'passphrase' => 'lololololol'
+                ]
+            ], 'discord_webhooks' => [
+                ['todo']
+            ]
 		]);
 	}
 }
