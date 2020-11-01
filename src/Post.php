@@ -62,7 +62,7 @@ class Post {
 					<name>{$this->contributor}</name>
 					<uri>{$contributor_uri}</uri>
 				</contributor>
-				<content type="html"><![CDATA[{$escaped_blurb}]]</content>
+				<content type="html"><![CDATA[{$escaped_blurb}]]></content>
 			</entry>
 		TEMPLATE;
     }

@@ -15,7 +15,7 @@ $view = new \MarxistSocialNews\View\Rss($db, [
     'title' => 'International Marxist Tendency News Aggregator',
     'subtitle' => 'This RSS feed contains recent articles from sections of the IMT. It is ordered chronologically',
     'vc_link' => 'https://github.com/marxist-social/news',
-    'link' => 'https://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].strtok($_SERVER["REQUEST_URI"], '?')
+    'link' => 'https://'.$_SERVER['SERVER_NAME'].strtok($_SERVER["REQUEST_URI"], '?')
 ]);
 header('Content-Type: application/rss+xml; charset=utf-8');
 echo $view->render();
