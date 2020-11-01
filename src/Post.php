@@ -50,14 +50,15 @@ class Post {
         $escaped_blurb = htmlspecialchars($this->blurb, ENT_XML1);
         $escaped_blurb = preg_replace( "/\r|\n/", "", $escaped_blurb);
         $escaped_title = html_entity_decode($this->title);
+        $escaped_link = htmlspecialchars($this->link, ENT_XML1);
         $cub = parse_url($this->link);
         $contributor_uri = $cub['scheme'].'://'.$cub['host'];
         return <<<TEMPLATE
 			<entry>
 				<title>{$escaped_title}</title>
 				<author><name>{$this->author}</name></author>
-				<link rel="alternate" type="text/html" href="{$this->link}"/>
-				<id>{$this->link}</id>
+				<link rel="alternate" type="text/html" href="{$escaped_link}"/>
+				<id>{$escaped_link}</id>
 				<published>{$date}</published>
 				<updated>{$date}</updated>
 				<category term="{$this->category}"/>
