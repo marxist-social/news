@@ -49,7 +49,7 @@ class Post {
         $date = date('Y-m-d\TH:i:sP', strtotime($this->post_date)); // dirty date format
         $escaped_blurb = htmlspecialchars($this->blurb, ENT_XML1);
         $escaped_blurb = preg_replace( "/\r|\n/", "", $escaped_blurb);
-        $escaped_title = htmlspecialchars($this->title, ENT_XML1);
+        $escaped_title = html_entity_decode($this->title);
         $cub = parse_url($this->link);
         $contributor_uri = $cub['scheme'].'://'.$cub['host'];
         return <<<TEMPLATE
