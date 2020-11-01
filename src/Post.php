@@ -47,26 +47,29 @@ class Post {
      */
     public function getRss() {
         $date = date('Y-m-d\TH:i:sP', strtotime($this->post_date)); // dirty date format
-        $escaped_blurb = htmlspecialchars($this->blurb, ENT_XML1);
-        $escaped_blurb = preg_replace( "/\r|\n/", "", $escaped_blurb);
-        $escaped_title = html_entity_decode($this->title);
-        $escaped_link = htmlspecialchars($this->link, ENT_XML1);
-        $cub = parse_url($this->link);
-        $contributor_uri = $cub['scheme'].'://'.$cub['host'];
+        $escaped = [
+            'blurb' => preg_replace( "/\r|\n/", "", htmlspecialchars($this->blurb, ENT_XML1)),
+            'link' => htmlspecialchars($this->link, ENT_XML1),
+            'title' => htmlspecialchars(html_entity_decode($this->title), ENT_XML1),
+            'category' => htmlspecialchars($this->category, ENT_XML1),
+            'author' => htmlspecialchars($this->author, ENT_XML1),
+            'contributor_uri' => htmlspecialchars(parse_url($this->link)['scheme'].'://'.parse_url($this->link)['host'], ENT_XML1),
+            'contributor' => htmlspecialchars($this->contributor, ENT_XML1)
+        ];
         return <<<TEMPLATE
 			<entry>
-				<title>{$escaped_title}</title>
-				<author><name>{$this->author}</name></author>
-				<link rel="alternate" type="text/html" href="{$escaped_link}"/>
-				<id>{$escaped_link}</id>
+				<title>{$escaped['title']}</title>
+				<author><name>{$escaped['author']}</name></author>
+				<link rel="alternate" type="text/html" href="{$escaped['link']}"/>
+				<id>{$escaped['link']}</id>
 				<published>{$date}</published>
 				<updated>{$date}</updated>
-				<category term="{$this->category}"/>
+				<category term="{$escaped['category']}"/>
 				<contributor>
-					<name>{$this->contributor}</name>
-					<uri>{$contributor_uri}</uri>
+					<name>{$escaped['contributor']}</name>
+					<uri>{$escaped['contributor_uri']}</uri>
 				</contributor>
-				<content type="html"><![CDATA[{$escaped_blurb}]]></content>
+				<content type="html"><![CDATA[{$escaped['blurb']}]]></content>
 			</entry>
 		TEMPLATE;
     }
