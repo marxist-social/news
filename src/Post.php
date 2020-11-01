@@ -47,7 +47,7 @@ class Post {
      */
     public function getRss() {
         $date = date('Y-m-d\TH:i:sP', strtotime($this->post_date)); // dirty date format
-        $escaped_blurb = htmlentities($this->blurb);
+        $escaped_blurb = htmlspecialchars($this->blurb, ENT_XML1);
         $escaped_blurb = preg_replace( "/\r|\n/", "", $escaped_blurb);
         $cub = parse_url($this->link);
         $contributor_uri = $cub['scheme'].'://'.$cub['host'];
@@ -56,7 +56,9 @@ class Post {
 				<title>{$this->title}</title>
 				<author><name>{$this->author}</name></author>
 				<link rel="alternate" type="text/html" href="{$this->link}"/>
+				<id>{$this->link}</id>
 				<published>{$date}</published>
+				<updated>{$date}</updated>
 				<category term="{$this->category}"/>
 				<contributor>
 					<name>{$this->contributor}</name>

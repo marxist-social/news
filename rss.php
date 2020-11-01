@@ -17,7 +17,7 @@ $view = new \MarxistSocialNews\View\Rss($db, [
     'vc_link' => 'https://github.com/marxist-social/news',
     'link' => 'https://'.$_SERVER['SERVER_NAME'].strtok($_SERVER["REQUEST_URI"], '?')
 ]);
-header('Content-Type: application/rss+xml; charset=utf-8');
+header('Content-Type: application/atom+xml; charset=utf-8');
 echo $view->render();
 
 
