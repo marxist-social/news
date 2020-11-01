@@ -59,6 +59,10 @@ class Homepage extends View {
 				$this->db->loadTableIntoMemory($site_posts_table_name);
 				foreach ($this->db->tables[$site_posts_table_name] as $post_array) {
 					$post = new \MarxistSocialNews\Post($post_array);
+
+                    if (is_null($post->contributor))
+                        $post->contributor = $site->name;
+
 					$aggregator_post_html .= $post->getHtml();
 				}
 				$this->db->removeTableFromMemory($site_posts_table_name);

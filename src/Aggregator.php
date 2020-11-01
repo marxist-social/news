@@ -19,16 +19,18 @@ class Aggregator {
 		$this->top_post_index = $base_post_index;
 	}
 
-	/**
- 	 * Fetches the latest n posts from the source.
- 	 *
- 	 * @param int $n number of posts to fetch.
-	 */
-	public function fetchLatestPosts($n) {
+    /**
+     * Fetches the latest n posts from the source.
+     *
+     * @param int $n number of posts to fetch.
+     * @throws Exception
+     */
+	public function fetchLatestPosts(int $n) {
 		$raw_data = $this->retrieveRawDataFromSite(); // Get the raw data (re-implement on child classes)
 		$raw_data = $this->applyRawDataHacks($this->site_info->raw_data_hacks, $raw_data);
 
 		$posts = $this->parseRawDataIntoPosts($raw_data); // Parse raw data into Post objects (re-implement on children)
+        $posts = $this->setContributor($posts);
 		$posts = $this->applyPostObjectHacks($this->site_info->post_object_hacks, $posts);
 
 		$posts = $this->limitPosts($posts, $n); // limit em if needed
@@ -42,8 +44,7 @@ class Aggregator {
 		$context = stream_context_create(["http" => [
 			"header" => "User-Agent: {$this->user_agent}"
 		]]);
-		$raw_data = file_get_contents($this->site_info->url, false, $context);
-		return $raw_data;
+        return file_get_contents($this->site_info->url, false, $context);
 	}
 
     /**
@@ -67,19 +68,17 @@ class Aggregator {
 	}
 
 	public function indexPosts($posts) {
-		$this->current_post_index = $this->base_post_index;
-		
 		foreach ($posts as $post) {
 			$post->index = (++$this->top_post_index);
 		}
-
 		return $posts;
 	}
 
 	// Subclass keys aren't anything real.. it's just for this function, and in sites.json
 	// Whats the proper way to upgrade to a subclass when you dont know the subclass ahead of time??
 	// Im making a method in the parent class, and it gets a string... thoughts?
-	// Or maybe a trait... write now it's a function in the aggregator service 
+	// Or maybe a trait... write now it's a function in the aggregator service
+    // ^ this is solved by resolver/factory methods
 	public function upgradeToSubClass($sub_class_key) {
 		$sub_classes_names = [
 			'wordpress'
@@ -111,4 +110,17 @@ class Aggregator {
 
 		return $post_objects;
 	}
+
+    /**
+     * Based on site_info
+     * @param array $posts
+     * @return array
+     */
+	function setContributor(array $posts)
+    {
+        foreach ($posts as $post) {
+            $post->contributor = $this->site_info->name;
+        }
+        return $posts;
+    }
 }
