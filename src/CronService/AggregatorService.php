@@ -21,43 +21,50 @@ class AggregatorService extends CronService {
 		$aggregator = new $aggregator_class($oldest_site, $db->tables['app_status']->articles_processed);
 		$aggregator->fetchLatestPosts($db->tables['app_settings']->cache_limit);
 
-		// Save them to the cache
-		$oldest_site_table_name = 'article_cache/'.$oldest_site->slug; // get table name
-		if (!$db->tableExistsInDatabase($oldest_site_table_name)) // create db table/cache if it doesnt already exist
-			$db->createTable($oldest_site_table_name);
+		if (count($aggregator->posts) > 0) { // DONT save if no posts received
+			// Save them to the cache
+			$oldest_site_table_name = 'article_cache/'.$oldest_site->slug; // get table name
+			if (!$db->tableExistsInDatabase($oldest_site_table_name)) // create db table/cache if it doesnt already exist
+				$db->createTable($oldest_site_table_name);
 
-		$db->loadTablesIntoMemory($oldest_site_table_name);
+			$db->loadTablesIntoMemory($oldest_site_table_name);
 
 
-		if (!is_null($db->tables[$oldest_site_table_name])) // This maintains indexes.
-			$db->tables[$oldest_site_table_name] = $this->modifyArrayWithUrlIndexing($aggregator->posts, $db->tables[$oldest_site_table_name]);
-		else
-			$db->tables[$oldest_site_table_name] = $aggregator->posts; // overwrite the table ! Either with cross indexed posts or nothin.
+			if (!is_null($db->tables[$oldest_site_table_name])) // This maintains indexes.
+				$db->tables[$oldest_site_table_name] = $this->modifyArrayWithUrlIndexing($aggregator->posts, $db->tables[$oldest_site_table_name]);
+			else
+				$db->tables[$oldest_site_table_name] = $aggregator->posts; // overwrite the table ! Either with cross indexed posts or nothin.
 
-		$db->saveWholeTable($oldest_site_table_name); // save it
+			$db->saveWholeTable($oldest_site_table_name); // save it
 
-		// Update the sites last-used or wtv
-		$db->tables['sites'][$oldest_site_index]->last_cached = strtotime("now");
-		$db->saveWholeTable('sites');
-		$db->tables['app_status']->articles_processed = $aggregator->top_post_index;
-		$db->saveWholeTable('app_status');
+			// Update the sites last-used or wtv
+			$db->tables['sites'][$oldest_site_index]->last_cached = strtotime("now");
+			$db->saveWholeTable('sites');
+			$db->tables['app_status']->articles_processed = $aggregator->top_post_index;
+			$db->saveWholeTable('app_status');
 
-		// Save a couple values:
-		$count_articles_cached = count($db->tables[$oldest_site_table_name]);
+			// Save a couple values:
+			$count_articles_cached = count($db->tables[$oldest_site_table_name]);
 
-		// Remove tables from memory
-		$db->removeTablesFromMemory(['sites', 'app_settings', 'app_status', $oldest_site_table_name]);
+			// Remove tables from memory
+			$db->removeTablesFromMemory(['sites', 'app_settings', 'app_status', $oldest_site_table_name]);
 
-		// And return the output + info other services will need
-		return [
-			'output' => "Aggregated {$count_articles_cached} articles (".count($this->new_post_indexes)." new) for [".$oldest_site->slug."] ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".",
-			'oldest_site' => $oldest_site,
-			'new_post_indexes' => $this->new_post_indexes
-		];
+			// And return the output + info other services will need
+			return [
+				'output' => "Aggregated {$count_articles_cached} articles (".count($this->new_post_indexes)." new) for [".$oldest_site->slug."] ".$oldest_site->name." at ".date("d M Y H:i:s", $oldest_site->last_cached).".",
+				'oldest_site' => $oldest_site,
+				'new_post_indexes' => $this->new_post_indexes
+			];
+		} else {
+			return [
+				'output' => 'Retrieved zero articles - skipping caching in case site is down - at '.date("d M Y H:i:s", $oldest_site->last_cached).".",
+				'oldest_site' => $oldest_site,
+				'new_post_indexes' => []
+			];
+		}
 	}
 
 	private function getAggregatorByType($type_name) { // Great trait also lol?
-
 		$types = [
 			'wordpress-api' => \MarxistSocialNews\Aggregator\WordPressApiAggregator::class,
 			'rss-atom' => \MarxistSocialNews\Aggregator\RssAtomAggregator::class,
