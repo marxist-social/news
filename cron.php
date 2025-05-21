@@ -18,7 +18,7 @@ $services_to_run = [
 ];
 
 $previous_service_data = [];
-$imt_seed = new \MarxistSocialNews\DatabaseSeed\ImtDatabaseSeed(); // or EmptySeed, SeedFromArray, SeedFromFile, etc...
+$rci_seed = new \MarxistSocialNews\DatabaseSeed\RciDatabaseSeed(); // or EmptySeed, SeedFromArray, SeedFromFile, etc...
 foreach ($services_to_run as $service_name => $service_class) {
 
     if (!empty($previous_service_data['aggregate']) && !in_array($service_name, $previous_service_data['aggregate']['oldest_site']->services))
@@ -26,7 +26,7 @@ foreach ($services_to_run as $service_name => $service_class) {
 
     $service = new $service_class([
         'previous_service_history' => $previous_service_data,
-        'db_config' => ['path' => __DIR__ . '/db', 'seed' => $imt_seed],
+        'db_config' => ['path' => __DIR__ . '/db', 'seed' => $rci_seed],
         'reddit_config' => [
             'user' => getenv('REDDIT_USER'),
             'pass' => getenv('REDDIT_PASS'),

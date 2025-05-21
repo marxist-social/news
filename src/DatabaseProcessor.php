@@ -3,8 +3,9 @@ namespace MarxistSocialNews;
 use Exception;
 
 class DatabaseProcessor {
-	public $tables = null;
-	public $path = null;
+	public array $tables;
+	public string $path;
+	public object $schema;
 
 	function __construct($path, $seed = null) {
 		$this->path = $path;
@@ -14,7 +15,7 @@ class DatabaseProcessor {
 		elseif (file_exists($this->path) && !is_dir($this->path))
 			throw new Exception("There is a file where we expect the path $this->path!");
 
-		$this->schema = $this->getSchemaArray();
+		$this->schema = $this->getSchema();
 
 		// Check if the tables exist in the database.
 		// If a table doesn't exist, copy the keys from the schema, empty array, create file
@@ -86,7 +87,7 @@ class DatabaseProcessor {
 
 
 
-	private function getSchemaArray() {
+	private function getSchema(): object {
 		return (object) [
 			'tables' => [
 				'app_settings' => [

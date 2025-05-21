@@ -29,11 +29,16 @@ class RssAtomAggregator extends Aggregator {
 		$rss_simple_xml = simplexml_load_string($raw_data);
 
 		foreach ($rss_simple_xml->entry as $simple_xml_post) {
+			$categories = [];
+			foreach ($simple_xml_post->category as $category) //TODO HERE
+				if (!in_array($category, ["ROOT", "Featured"]))
+					array_push($categories, (string) $category);
+
 			array_push($parsed_rss_posts, new Post([
 				'title' => (string) $simple_xml_post->title,
 				'author' => (string) $simple_xml_post->author->name,
 				'post_date' => (string) $simple_xml_post->published,
-				'category' => (string) $simple_xml_post->category[count($simple_xml_post->category) - 1]['term'],
+				'categories' => $categories,
 				'blurb' => (string) $simple_xml_post->summary,
 				'link' => (string) $simple_xml_post->link['href']
 			]));
