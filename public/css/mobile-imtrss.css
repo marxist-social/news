@@ -10,3 +10,14 @@
 		float: none;
 	}
 }
+
+@media only screen and (max-width: 860px) {
+	.home__stickyflex {
+		display: block;
+	}
+
+	.home__contents {
+		position: relative;
+		top: 0;
+	}
+}

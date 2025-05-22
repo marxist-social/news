@@ -46,33 +46,52 @@ a:focus, a:hover {
 	font-weight: 700;
 }
 
+.home__stickyflex {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.home__contents {
+	display: flex;
+	justify-content: center;
+	position: sticky;
+  	top: 20px;
+}
+
 .home__footer_meta {
 	text-align: center;
 	font-style: italic;
 }
 
+.home__aggregators > ul {
+	list-style: none;
+	margin: 0;
+	padding: 0 1rem 0 0;
+}
+
 /* Table of contents related */
 .aggregator {
-	position: relative;
+	/*position: relative;*/
+	margin-bottom: 1rem;
 }
 
 .aggregator__contents {
-	display: flex;
-	flex-wrap: wrap;
 	margin: 0;
 	padding: 1rem;
 	list-style: none;
+	border: 1px solid black;
 }
 
 .aggregator__contents > li {
-	width: 300px;
+	width: 100%;
 	position: relative;
-	font-weight: bold;
 }
 
 .aggregator__contents > li > ul {
 	position: relative;
-	top: -1em;
+	top: calc(-1em - 3px);
 	list-style: none;
 	margin: 0;
 	padding: 0 0 0 calc(1em + 10px);
@@ -82,10 +101,11 @@ a:focus, a:hover {
 	font-weight: 400;
 }
 
-	/* Related to the mass of aggregators */
+/* Related to the mass of aggregators */
 .aggregator__latest_posts {
-	display: flex;
-	flex-wrap: wrap;
+	/*display: flex;
+	flex-wrap: wrap;*/
+	list-style: none;
 }
 
 .aggregator__meta {
@@ -94,16 +114,20 @@ a:focus, a:hover {
 }
 
 .aggregator__title {
-	margin: 1rem 0 0 0;
+	/*margin: 1rem 0 0 0;
 	position: relative;
-	left: -2rem;
+	left: -2rem;*/
+	margin: 0;
 }
 
+.aggregator__link {
+	margin: 0;
+}
 
 /* Post box specific */
 .post {
-	padding: 1rem;
-	max-width: calc(33% - 2rem);
+	/*padding: 1rem;
+	max-width: calc(33% - 2rem);*/
 }
 
 .aggregator__title small {
@@ -121,4 +145,12 @@ a:focus, a:hover {
 	max-width: 100%;
 	float: left;
 	margin: 0 1rem 1rem 0;
+}
+
+.post__title {
+	margin: 0;
+	width: 520px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

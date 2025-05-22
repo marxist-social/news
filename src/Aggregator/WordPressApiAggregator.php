@@ -7,7 +7,7 @@ use Exception;
 class WordPressApiAggregator extends Aggregator {
 	const API_PATH = "wp-json/wp/v2/posts";
 	const API_QUERY = [
-		"_embed" => ["wp:term"],
+		"_embed" => ["wp:term", "author"],
 		"_fields" => [
 			"_links",
 			"_embedded",
@@ -41,7 +41,10 @@ class WordPressApiAggregator extends Aggregator {
 			foreach ($up->_embedded->{"wp:term"}[1] as $tag)
 				array_push($tags, $tag->name);
 
-			$author = $this->getAuthor($up);
+			if (!in_array("skip-author", $this->site_info->flags))
+				$author = $this->getAuthor($up);
+			else
+				$author = "Unknown";
 
 			array_push($parsed_posts, new Post([
 				'title' => $up->title->rendered,
@@ -70,12 +73,34 @@ class WordPressApiAggregator extends Aggregator {
 		return rtrim($api_url, '&');
 	}
 
+	// Why is this like 75% of the work...
 	private function getAuthor($unparsed_post) {
-		if (property_exists($unparsed_post, "yoast_head_json"))
-			return $unparsed_post->yoast_head_json->twitter_misc->{"Written by"};
-		else if (property_exists($unparsed_post, "acf"))
-			return $unparsed_post->acf->author;
-		else
+		$author = null;
+		$author_method = null;
+		if (property_exists($unparsed_post, "yoast_head_json") && property_exists($unparsed_post->yoast_head_json, "twitter_misc")) {
+			if (property_exists($unparsed_post->yoast_head_json->twitter_misc, "Written by")) {
+				$author = $unparsed_post->yoast_head_json->twitter_misc->{"Written by"};
+				$author_method = "yoast-written-by";
+			} else if (property_exists($unparsed_post->yoast_head_json->twitter_misc, "Escrito por")) {
+				$author = $unparsed_post->yoast_head_json->twitter_misc->{"Escrito por"};
+				$author_method = "yoast-escito-por";
+			}
+		} else if (property_exists($unparsed_post, "acf")) {
+			$author = $unparsed_post->acf->author;
+			$author_method = "advanced custom fields";
+		} else if (isset($unparsed_post->_embedded->{"wp:term"}[2]) && property_exists($unparsed_post->_embedded->{"wp:term"}[2][0], "name")) {
+			$author = $unparsed_post->_embedded->{"wp:term"}[2][0]->name;
+			$author_method = "wp term";
+		} else if (property_exists($unparsed_post->_embedded, "author") && property_exists($unparsed_post->_embedded->author[0], "name")) {
+			$author = $unparsed_post->_embedded->author[0]->name;
+			$author_method = "author field";
+		} else {
 			throw new Exception("Can't parse an author in getAuthor for WordPress");
+		}
+
+		if (is_null($author))
+			throw new Exception("Author is null. Method is ".$author_method);
+
+		return $author;
 	}
 }

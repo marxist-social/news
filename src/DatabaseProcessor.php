@@ -111,13 +111,15 @@ class DatabaseProcessor {
 					"name" => null, // These are the columns. key is name, val is default value
 					"slug" => null,
 					"url" => null,
+					"friendly_url" => null,
 					"aggregator_type" => null,
+					"continent" => null,
 					"country" => null,
 					"province" => null,
 					"last_cached" => null,
 					"raw_data_hacks" => null,
 					"post_object_hacks" => null,
-					"flags" => null,
+					"flags" => [],
 					"services" => ["aggregate", "homepage", "reddit"],
 					"subreddits" => []
 				]

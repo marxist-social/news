@@ -23,16 +23,16 @@ class Homepage extends View {
 				<body class="home__body">
 					<h1 class="home__title">%title%</h1>
 					%description%
-					<hr  style="margin-top: 3rem;"/>
-					<div class="home__contents">
-						%contents%
+					<div class="home__stickyflex">
+						<div class="home__contents">
+							%contents%
+						</div>
+						<div class="home__aggregators">
+							<ul>
+								%aggregators%
+							</ul>
+						</div>
 					</div>
-					<hr  style="margin-top: 3rem;"/>
-					<div class="home__aggregators">
-						%aggregators%
-					</div>
-					<hr />
-					<p class="home__end">End of %title%</p>
 					<p class="home__footer_meta">%footer% <a href="%vc_repo%" target="_blank">%vc_repo%</a>.</p>
 				</body>
 			</html>
@@ -63,7 +63,7 @@ class Homepage extends View {
                     if (is_null($post->contributor))
                         $post->contributor = $site->name;
 
-					$aggregator_post_html .= $post->getHtml();
+					$aggregator_post_html .= $post->getShortHtml();
 				}
 				$this->db->removeTableFromMemory($site_posts_table_name);
 
@@ -82,7 +82,7 @@ class Homepage extends View {
 		foreach ($indexed_sites as $letter => $sites) {
             $content_html .= "<li>".strtoupper($letter)."<ul>";
             foreach ($sites as $site) {
-                $content_html .= "<li><a href='#".$site->slug."'>".$site->country." | ".$site->name."</a></li>";
+                $content_html .= "<li><strong>".$site->country."</strong> | <a href='#".$site->slug."'>".$site->name."</a></li>";
             }
             $content_html .= "</ul></li>";
         }
@@ -103,17 +103,18 @@ class Homepage extends View {
 			$province = ', '.$args['site']->province;
 		$last_cached_date = date('l F jS \a\t H:i T', $args['site']->last_cached);
 
+		$url = !is_null($args['site']->friendly_url) ? $args['site']->friendly_url : $args['site']->url;
+
 		return <<<TEMPLATE
-			<hr />
-			<div class="aggregator">
-				<h2 class="aggregator__title" id="{$args['site']->slug}">{$args['site']->name} 
-					<small>{$args['site']->country}{$province}</small>
+			<li class="aggregator">
+				<h2 class="aggregator__title" id="{$args['site']->slug}">{$args['site']->country}, {$args['site']->name} 
 				</h2>
-				<p class="aggregator__meta">Cached {$last_cached_date}</p>
-				<div class="aggregator__latest_posts">
+				<p class="aggregator__link"><em><a href="{$args['site']->url}" target="_blank">{$url}</a></em></p>
+				<!--<p class="aggregator__meta">Cached {$last_cached_date}</p>-->
+				<ul class="aggregator__latest_posts">
 					{$args['post_html']}
-				</div>
-			</div>
+				</ul>
+			</li>
 		TEMPLATE;
 	}
 }

@@ -27,7 +27,7 @@ class Post {
      * Represent a post as HTML
      * @return string
      */
-	public function getHtml() {
+	public function getHtml(): string {
 		$date = date('l F jS, Y (h:i A)', strtotime($this->post_date)); // dirty date format
 		$category = $this->getCategoryString();
 		return <<<TEMPLATE
@@ -42,11 +42,21 @@ class Post {
 		TEMPLATE;
 	}
 
+	public function getShortHtml(): string {
+		$date = date('l F jS, Y (h:i A)', strtotime($this->post_date));
+		$category = $this->getCategoryString();
+		return <<<TEMPLATE
+			<li class="post">
+				<h3 class="post__title"><a href="{$this->link}" target="_blank" title="{$this->title}">{$this->title}</a></h3>
+			</li>
+		TEMPLATE;
+	}
+
     /**
      * Represent a post as an RSS atom entry
      * @return string
      */
-    public function getRss() {
+    public function getRss(): string {
         $date = date('Y-m-d\TH:i:sP', strtotime($this->post_date)); // dirty date format
         $escaped = [
             'blurb' => preg_replace( "/\r|\n/", "", htmlspecialchars($this->blurb, ENT_XML1)),
@@ -75,7 +85,7 @@ class Post {
 		TEMPLATE;
     }
 
-    public function getCategoryString() {
+    public function getCategoryString(): string {
     	$category_string = "";
     	foreach ($this->categories as $c)
     		$category_string .= $c.", ";

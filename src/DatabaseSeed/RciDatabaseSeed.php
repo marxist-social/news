@@ -29,34 +29,104 @@ class RciDatabaseSeed extends DatabaseSeed {
 					"slug" => "mx-com",
 					"url" => "https://marxist.com/",
 					"aggregator_type" => "rss-atom",
+					"continent" => "International",
 					"country" => "International",
 					"subreddits" => ['rci']
 				], [
 					"name" => "Revolutionary Communist Party",
 					"slug" => "rcp-ca",
 					"url" => "https://admin.marxist.ca/",
+					"friendly_url" => "https://marxist.ca/",
 					"aggregator_type" => "wordpress-api",
+					"continent" => "North America",
 					"country" => "Canada",
 					"subreddits" => ['rci']
 				], [
 					"name" => "Parti Communiste Révolutionnaire",
 					"slug" => "pcr-qc",
 					"url" => "https://admin.marxiste.qc.ca/",
+					"friendly_url" => "https://marxiste.qc.ca/",
 					"aggregator_type" => "wordpress-api",
-					"country" => "Canada",
-					"province" => "Québec",
+					"continent" => "North America",
+					"country" => "Québec",
 					"subreddits" => ['rci']
 				], [
 					"name" => "Revolutionary Communists of America",
 					"slug" => "rca-usa",
 					"url" => "https://communistusa.org/",
 					"aggregator_type" => "wordpress-api",
+					"continent" => "North America",
 					"country" => "USA",
 					"subreddits" => ['rci']
-				]/*, [
+				], [
+					"name" => "Marxist Alternative",
+					"slug" => "ma-ni",
+					"url" => "https://marxistalternative.org/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "Africa",
+					"country" => "Nigeria",
+					"flags" => ["skip-author"],
+					"subreddits" => ['rci']
+				], [
+					"name" => "Revolution",
+					"slug" => "rcsa-sa",
+					"url" => "https://marxist.co.za/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "Africa",
+					"country" => "South Africa",
+					"subreddits" => ['rci']
+				], [
+					"name" => "Communist Struggle",
+					"slug" => "rci-in",
+					"url" => "https://communiststruggle.com/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "Asia",
+					"country" => "India",
+					"subreddits" => ['rci']
+				], [
+					"name" => "Ombak Revolusi",
+					"slug" => "or-ma",
+					"url" => "https://communiststruggle.com/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "Asia",
+					"country" => "Malaysia ",
+					"subreddits" => ['rci']
+				], [
+					"name" => "Inqalabi Communist Party",
+					"slug" => "icp-pk",
+					"url" => "https://www.marxist.pk/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "Asia",
+					"country" => "Pakistan",
+					"subreddits" => ['rci']
+				], [
+					"name" => "The Spark",
+					"slug" => "rci-tw",
+					"url" => "https://marxist.tw/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "Asia",
+					"country" => "Taiwan",
+					"subreddits" => ['rci']
+				], [
+					"name" => "Revolución",
+					"slug" => "ocm-ar",
+					"url" => "https://argentinamilitante.org/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "South America",
+					"country" => "Argentina",
+					"subreddits" => ['rci']
+				], [
+					"name" => "Organização Comunista Internacionalista",
+					"slug" => "oci-br",
+					"url" => "https://marxismo.org.br/",
+					"aggregator_type" => "wordpress-api",
+					"continent" => "South America",
+					"country" => "Brazil",
+					"subreddits" => ['rci']
+				],/*, [
 					"name" => "Esquerda Marxista",
 					"slug" => "em-br",
-					"url" => "https://www.marxismo.org.br/",
+					"url" => "https://communiststruggle.com/",
 					"aggregator_type" => "rss-atom",
 					"country" => "Brasil",
 					"subreddits" => ['rci']
